@@ -10,7 +10,7 @@ Outil permettant de mieux comprendre les raisons de l'évolution des populations
 Faire une cabane à oiseaux qui fait des photos des oiseaux qui viennent s'y nourrir, et récupérer des informations sur les populations à ces endroits et d'en établir un lien avec les facteurs environnementaux.
 
 - Creation d'un facteur de qualité de l'air, température, humidité,
-- machine learning pour reconnaitre les différentes espèces d'oiseaux
+- machine learning pour reconnaître les différentes espèces d'oiseaux
 - Comptage des différentes espèces
 - réalisation d'une interface graphique présentant : 
     - bibliothèque d'oiseaux
