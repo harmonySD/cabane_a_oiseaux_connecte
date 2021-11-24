@@ -1,5 +1,6 @@
 1) La cabane
 - Apprendre à utiliser Blender
+- Modeliser la cabane
 - Se documenter sur la meilleur manière d'attirer les oiseaux dans un cabane
 - Imprimer la cabane
 - Installer la Cabane ainsi que le rapsberryPi

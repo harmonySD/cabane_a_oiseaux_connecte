@@ -1,3 +1,7 @@
+imprimer la cabane:
+s'incrire au fablab/ envoyer un mail + demande formation
+http://fablab-diderot@script.univ-paris-diderot.fr/
+
 camera raspberry pi : 
 https://raspberrypi-tutorials.fr/prise-de-photos-avec-le-module-officiel-de-lappareil-photo-du-raspberry-pi/
 
