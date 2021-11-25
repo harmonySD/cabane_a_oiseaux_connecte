@@ -1,0 +1,6 @@
+<25/11/2021>
+* sujet : cabane à oiseaux
+* TODO : se documenter :
+  quels critères pour identifer facilement un oiseau ?
+  quelles bibliothèques utiliser pour ça ?
+

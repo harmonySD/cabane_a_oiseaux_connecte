@@ -6,7 +6,7 @@
 - Installer la Cabane ainsi que le rapsberryPi
 
 (RapsberryPi ou Arduino : revient au même)
-2) Lien entre RapsberryPi et l'ordinateur 
+2) Lien entre RapsberryPi et l'ordinateur
 - Connecter le RapsberryPi à l'ordinateur
 - Lui faire prendre des photos à intervalles régulier
 - Récupérer les photos et les donner à analyser à l'ordinateur
