@@ -1,9 +1,11 @@
-1) La cabane
+1) La cabane Inkskape
 - Apprendre à utiliser Blender
 - Modeliser la cabane
 - Se documenter sur la meilleur manière d'attirer les oiseaux dans un cabane
 - Imprimer la cabane
 - Installer la Cabane ainsi que le rapsberryPi
+
+//rapsberry plutot
 
 (RapsberryPi ou Arduino : revient au même)
 2) Lien entre RapsberryPi et l'ordinateur 
@@ -17,3 +19,8 @@
 4) Agir en fonction de l'espèce
 - Chasser l'oiseaux si il ne correspond pas à l'espèce
 => installer un répulsif à ultrason pour oiseaux
+
+Problématique :
+- chateau vs cabane 
+- vnc ??
+- emplacement
