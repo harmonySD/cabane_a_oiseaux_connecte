@@ -4,3 +4,9 @@
   quels critères pour identifer facilement un oiseau ?
   quelles bibliothèques utiliser pour ça ?
 
+
+<16/12/2021>
+* FAIT : vu opencv. critères
+* TODO :
+  - se renseigner sur les fonctions d'openCV pour les couleurs, la taille et les formes
+  - demander un Raspberry pi la prochaine fois ?
