@@ -41,10 +41,8 @@ seuil=10
 
 #oiseau en blanc
 mask=create_mask(oiseau,image_fond,seuil)
-#comment savoir que cest bien un oiseau pas autre choses ?
-
-
-
+#appel circleandcenter
+#appel code.py (pour couleur)
 
 cv2.imshow("image",image_fond)
 cv2.imshow("pigeon",oiseau)

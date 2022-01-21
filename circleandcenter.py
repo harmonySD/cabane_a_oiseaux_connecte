@@ -20,34 +20,14 @@ def get_masked(img):
                 center = (int(x),int(y))
                 radius = int(radius)
                 cv2.circle(img,center,radius,(0,255,0),2)
-                return img
+                return img, radius
 
 
 
 oiseau=cv2.imread("pigeon.jpg")
-img=get_masked(oiseau)
-# convert image to grayscale image
-gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+img, rad=get_masked(oiseau)
 
-# convert the grayscale image to binary image
-ret,thresh = cv2.threshold(gray_image,127,255,0)
-
-
-# calculate moments of binary image
-M = cv2.moments(thresh)
-
-
-
-
-# calculate x,y coordinate of center
-cX = int(M["m10"] / M["m00"])
-cY = int(M["m01"] / M["m00"])
-
-
-
-# put text and highlight the center
-cv2.circle(img, (cX, cY),5, (255, 0,0 ), 4)
-cv2.putText(img, "centroid", (cX - 25, cY - 25),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+print(rad)
 
 # display the image
 cv2.imshow("Image", img)
