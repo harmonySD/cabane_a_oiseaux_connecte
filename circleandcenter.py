@@ -23,12 +23,10 @@ def get_masked(img):
                 return img, radius
 
 
+#pour test
+#oiseau=cv2.imread("pigeon.jpg")
+#img, rad=get_masked(oiseau)
+#print(rad)
 
-oiseau=cv2.imread("pigeon.jpg")
-img, rad=get_masked(oiseau)
-
-print(rad)
-
-# display the image
-cv2.imshow("Image", img)
-cv2.waitKey(0)
+#cv2.imshow("Image", img)
+#cv2.waitKey(0)

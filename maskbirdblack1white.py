@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+import circleandcenter as circ
+
 
 def create_mask(image, background, threshold):
     
@@ -42,11 +44,14 @@ seuil=10
 #oiseau en blanc
 mask=create_mask(oiseau,image_fond,seuil)
 #appel circleandcenter
+mask2,rad=circ.get_masked(oiseau)
 #appel code.py (pour couleur)
 
-cv2.imshow("image",image_fond)
+cv2.imshow("mask2",mask2)
 cv2.imshow("pigeon",oiseau)
 cv2.imshow("mask",mask)
+print(rad)
+
 
 cv2.waitKey()
 #cv2.destroyAllWindows()
