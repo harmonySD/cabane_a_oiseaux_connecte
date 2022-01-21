@@ -35,7 +35,7 @@ def create_mask(image, background, threshold):
     
 #2 images de meme dimensions
 image_fond=cv2.imread("image_blanche.jpeg")
-oiseau=cv2.imread("moineau.jpg")
+oiseau=cv2.imread("pigeon.jpg")
 
 seuil=10
 

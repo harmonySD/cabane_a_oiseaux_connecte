@@ -23,7 +23,8 @@ def get_masked(img):
                 return img
 
 
-oiseau=cv2.imread("/Users/harmonysimon-duchatel/M1/blerald-simon-duchatel-2021/cat_01.jpg")
+
+oiseau=cv2.imread("pigeon.jpg")
 img=get_masked(oiseau)
 # convert image to grayscale image
 gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
