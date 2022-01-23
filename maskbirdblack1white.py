@@ -33,11 +33,10 @@ def create_mask(image, background, threshold):
     return mask
 
 
-
     
 #2 images de meme dimensions
 image_fond=cv2.imread("image_blanche.jpeg")
-oiseau=cv2.imread("pigeon.jpg")
+oiseau=cv2.imread("mesange.jpg")
 
 seuil=10
 
@@ -48,10 +47,11 @@ mask2,rad=circ.get_masked(oiseau)
 #appel code.py (pour couleur)
 
 cv2.imshow("mask2",mask2)
-cv2.imshow("pigeon",oiseau)
+cv2.imshow("oiseau",oiseau)
 cv2.imshow("mask",mask)
 print(rad)
 
+#utiliser tout ca pour determiner l'oiseau avec un tableau avec des oiseaux deja etablis
 
 cv2.waitKey()
 #cv2.destroyAllWindows()
