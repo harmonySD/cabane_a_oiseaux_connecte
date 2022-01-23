@@ -52,10 +52,13 @@ def supprBackgroundColorResult(colors):
 
     return np.delete(colors, idx, 0)
 
-img = 'choco.png'
-clusters = 2  # au minimum vu qu'il y a le blanc du fond
-dc = DominantColors(img, clusters)
-colors = dc.dominantColors()
 
-colors = supprBackgroundColorResult(colors)
-print(colors)
+def getDominantColors(img_pathname):
+    clusters = 2  # au minimum vu qu'il y a le blanc du fond
+    dc = DominantColors(img_pathname, clusters)
+    colors = dc.dominantColors()
+
+    colors = supprBackgroundColorResult(colors)
+
+
+print(getDominantColors('pigeon.jpg'))
