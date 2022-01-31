@@ -5,19 +5,19 @@ import cv2
 import numpy as np
 
 
-def resize(nom):
+def resize():
     try:
         # entrer le nom du fichier de l'image
-        filename = "images/" + nom + ".jpg"  
+        filename =  "pigeon2.jpg"  
         #lire l'image
         oriimg = cv2.imread(filename) 
         # redimensionnement de l'image
-        newimg = cv2.resize(oriimg,(50, 50))  
+        newimg = cv2.resize(oriimg,(800, 548))  
         # afficher l'image
         cv2.imshow("Show by CV2",newimg)
         cv2.waitKey(0)
         # sauvegarder l'image
-        cv2.imwrite(nom + ".jpg",newimg)
+        cv2.imwrite("pigeon3" + ".jpg",newimg)
         #importation de librairie nécessaires 
 
 
@@ -26,4 +26,4 @@ def resize(nom):
     except Exception as e:
         print(str(e))
 
-resize("marmotte")
+resize()

@@ -57,8 +57,8 @@ def getDominantColors(img_pathname):
     clusters = 2  # au minimum vu qu'il y a le blanc du fond
     dc = DominantColors(img_pathname, clusters)
     colors = dc.dominantColors()
-
     colors = supprBackgroundColorResult(colors)
+    return colors
 
 
 print(getDominantColors('pigeon.jpg'))

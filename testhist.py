@@ -1,10 +1,10 @@
 import cv2
-from cv2 import CV_32F
 import numpy as np
-
+from cv2 import CV_32F
 # importing library for plotting
 from matplotlib import pyplot as plt
-  
+
+
 def process(img):
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     img_canny = cv2.Canny(img_gray, 0, 50)
@@ -12,10 +12,12 @@ def process(img):
     img_erode = cv2.erode(img_dilate, None, iterations=0)
     return img_erode
 
+
 def get_masked(img):
     h, w, _ = img.shape
     center = h // 2, w // 2
-    contours, _ = cv2.findContours(process(img), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    contours, _ = cv2.findContours(
+        process(img), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     for cnt in contours:
         if cv2.contourArea(cnt) > 100:
             if cv2.pointPolygonTest(cnt, center, False) > 0:
@@ -24,52 +26,82 @@ def get_masked(img):
                 return cv2.bitwise_and(img, img, mask=mask)
 
 
-
-
 def create_mask(image, background, threshold):
-    
+
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     background = cv2.cvtColor(background, cv2.COLOR_BGR2GRAY)
-    
+
     image = image.astype(np.int16)
     background = background.astype(np.int16)
-    
+
     # différence entre frame et background
     mask = np.abs(image - background)
     mask = mask.astype(np.uint8)
-    
+
     is_greater_threshold = mask > threshold
-    
+
     # Mettre en blancs les élements qui ont une trop grande différence avec le background
     mask[is_greater_threshold] = 255
-    
+
     # Sinon en noir
     mask[np.logical_not(is_greater_threshold)] = 0
-    
 
     # Nettoyage du mask
-    kernel = np.ones((5,5), np.uint8)
+    kernel = np.ones((5, 5), np.uint8)
     mask = cv2.erode(mask, kernel, iterations=0)
     mask = cv2.dilate(mask, kernel, iterations=0)
-    
-    
+
     return mask
 
+
 # reads an input image
-image_fond=cv2.imread("image_blanche.jpeg")
+image_fond = cv2.imread("image_blanche.jpeg")
 
-seuil=10
+seuil = 10
 
-img = cv2.imread("mesange.jpg")
-img1=create_mask(img, image_fond,seuil)
+img_p = cv2.imread("pigeon.jpg")
+mask_p = create_mask(img_p, image_fond, seuil)
 
+img_m = cv2.imread("pigeon3.jpg")
+mask_m = create_mask(img_m, image_fond, seuil)
 
+"""
 cv2.imshow("Image", img1)
 cv2.waitKey(0)
-  
+"""
+
 # find frequency of pixels in range 0-255
-histr = cv2.calcHist([img],[0],img1,[256],[0,256])
-  
+histr1 = cv2.calcHist([img_p], [0], mask_p, [256], [0, 256])
+histr2 = cv2.calcHist([img_m], [0], mask_m, [256], [0, 256])
+
+def getDataFromHist(hist):
+    hist = hist.flatten()
+    total = sum(hist)
+    
+    data = [(sum(hist[i * 17: (i * 17) + 17]) / 15) for i in range(17)]
+    return [(data[i] * (data[i] / total)) for i in range(17)]
+    
+def getPourcentageFromData(data1,data2):
+    pourcentages = []
+    for i in range(17):
+        a = data1[i] if data1[i] <= data2[i] else data2[i]
+        b = data1[i] if data1[i] > data2[i] else data2[i]
+    
+        pourcentages.append(a / b if b != 0 else (a+1) / (b+1))
+
+    return (sum(pourcentages) / 17) * 100
+
+data1 = getDataFromHist(histr1)
+print("data 1: ",data1)
+
+data2 = getDataFromHist(histr2)
+print("data 2: ",data2)
+
+print("pourcentage : ",getPourcentageFromData(data1,data2))
 # show the plotting graph of an image
-plt.plot(histr)
+plt.plot(histr1)
 plt.show()
+
+plt.plot(histr2)
+plt.show()
+# print(cv2.compareHist(histr1, histr1, 4))
