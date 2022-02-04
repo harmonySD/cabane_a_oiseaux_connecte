@@ -60,7 +60,7 @@ image_fond=cv2.imread("image_blanche.jpeg")
 
 seuil=10
 
-img = cv2.imread("mesange.jpg")
+img = cv2.imread("pigeon.jpg")
 img1=create_mask(img, image_fond,seuil)
 
 
