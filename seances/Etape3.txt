@@ -1,0 +1,21 @@
+Interrogations : 
+
+I) Machine learning :
+- la librairie OpenCV est une bibliothèque python utilisé par beaucoup d'algo de reconnaissance divers(couleur, forme, etc). Peut-on l'utiliser ?
+- Idée : - combiner différents algorithmes de machine learning
+         - et comparer leur efficacité à trouver la bonne espèce d'oiseau en fonction de critères (taille, couleur, forme, etc).
+- critères : bec, pattes, forme, couleur, taille, jour/nuit (chant ? => si ajout de la vidéo)
+- prendre les oiseaux en photo de côté
+- https://www.juripredis.com/fr/blog/id-19-demystifier-le-machine-learning-partie-2-les-reseaux-de-neurones-artificiels
+réseaux de neurones utiles pour le projet ?
+
+liens : Tuto opencv
+        - https://docs.opencv.org/4.x/d9/df8/tutorial_root.html (basic)
+        - https://docs.opencv.org/4.x/dc/dd6/ml_intro.html (training data)
+        
+        OpenCV - Machine learning
+        - https://www.youtube.com/watch?v=HqJsGqsGVho (vid yt)
+        https://www.youtube.com/watch?v=8VdiZWQP_a0
+
+        - https://www.aranacorp.com/fr/reconnaissance-de-forme-et-de-couleur-avec-python/ (reconnaissance forme et couleur)
+        - https://fr.blog.businessdecision.com/tutoriel-machine-learning-comprendre-ce-quest-un-reseau-de-neurones-et-en-creer-un/l

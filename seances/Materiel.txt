@@ -1,0 +1,16 @@
+- Arduino/RapsberryPi : doit servir d'ordinateur embarqué, c'est lui qui sera connecté à la caméra et qui enverra des données à notre ordinateur.
+=> batteries externes
+
+- Caméra : doit servir à prendre les photos à intervalles régulier de l'intérieur de la cabane
+
+- La cabane peut être posée dans un jardin privée (Clément)
+
+- RapsberryPi : doit recevoir les données envoyées par la caméra
+Accès au FabLab pour utiliser l'imprimente 3D pour construire la cabane.
+Logiciel de modélisation 3D : Blender
+
+- Problème : y a des chats dans mon cimetière, ils vont attaquer les oiseaux =(
+
+Lien(s): 
+https://www.paris.fr/pages/comment-installer-un-nid-douillet-pour-les-oiseaux-a-paris-18924
+https://www.guidebatimentdurable.brussels/fr/concevoir.html?IDC=10447
