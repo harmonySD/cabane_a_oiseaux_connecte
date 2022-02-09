@@ -8,16 +8,16 @@ import numpy as np
 def resize():
     try:
         # entrer le nom du fichier de l'image
-        filename =  "pigeon2.jpg"  
+        filename =  "merle2.jpg"  
         #lire l'image
         oriimg = cv2.imread(filename) 
         # redimensionnement de l'image
         newimg = cv2.resize(oriimg,(800, 548))  
         # afficher l'image
         cv2.imshow("Show by CV2",newimg)
-        cv2.waitKey(0)
+        # cv2.waitKey(0)
         # sauvegarder l'image
-        cv2.imwrite("pigeon3" + ".jpg",newimg)
+        cv2.imwrite("merle2" + ".jpg",newimg)
         #importation de librairie nécessaires 
 
 

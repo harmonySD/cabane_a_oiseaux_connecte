@@ -59,10 +59,10 @@ image_fond = cv2.imread("image_blanche.jpeg")
 
 seuil = 10
 
-img_p = cv2.imread("pigeon.jpg")
+img_p = cv2.imread("merle2.jpg")
 mask_p = create_mask(img_p, image_fond, seuil)
 
-img_m = cv2.imread("pigeon3.jpg")
+img_m = cv2.imread("merle.jpg")
 mask_m = create_mask(img_m, image_fond, seuil)
 
 """
@@ -70,38 +70,40 @@ cv2.imshow("Image", img1)
 cv2.waitKey(0)
 """
 
-# find frequency of pixels in range 0-255
-histr1 = cv2.calcHist([img_p], [0], mask_p, [256], [0, 256])
-histr2 = cv2.calcHist([img_m], [0], mask_m, [256], [0, 256])
-
 def getDataFromHist(hist):
     hist = hist.flatten()
     total = sum(hist)
+    print(total)
     
-    data = [(sum(hist[i * 17: (i * 17) + 17]) / 15) for i in range(17)]
-    return [(data[i] * (data[i] / total)) for i in range(17)]
+    data = [(sum(hist[i * 16: (i * 16) + 16])) for i in range(16)]
+    return [(data[i] * (100 / total)) for i in range(16)]
     
 def getPourcentageFromData(data1,data2):
     pourcentages = []
-    for i in range(17):
+    for i in range(16):
         a = data1[i] if data1[i] <= data2[i] else data2[i]
         b = data1[i] if data1[i] > data2[i] else data2[i]
     
         pourcentages.append(a / b if b != 0 else (a+1) / (b+1))
 
-    return (sum(pourcentages) / 17) * 100
+    return (sum(pourcentages) / 16) * 100
 
+
+# find frequency of pixels in range 0-255
+
+# show the plotting graph of an image
+
+histr1 = cv2.calcHist([img_p], [0], mask_p, [256], [0, 256])
 data1 = getDataFromHist(histr1)
 print("data 1: ",data1)
-
-data2 = getDataFromHist(histr2)
-print("data 2: ",data2)
-
-print("pourcentage : ",getPourcentageFromData(data1,data2))
-# show the plotting graph of an image
 plt.plot(histr1)
 plt.show()
 
+
+histr2 = cv2.calcHist([img_m], [0], mask_m, [256], [0, 256])
+data2 = getDataFromHist(histr2)
+print("data 2: ",data2)
 plt.plot(histr2)
 plt.show()
-# print(cv2.compareHist(histr1, histr1, 4))
+
+print("pourcentage : ",getPourcentageFromData(data1,data2))
