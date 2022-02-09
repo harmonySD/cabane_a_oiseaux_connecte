@@ -1,6 +1,8 @@
-import urllib.request
-import cv2
 import os
+import urllib.request
+
+import cv2
+
 
 def resize():
     try:
@@ -24,6 +26,7 @@ def enregistre():
     file.close()
     nb=0
     for line in lines:
+        print("line : ", line)
         url=line
         nom="../info_image_oiseaux/images/image"+str(nb)+".jpg"
         urllib.request.urlretrieve(url, nom)

@@ -57,8 +57,7 @@ def create_mask(image, background, threshold):
 def getDataFromHist(hist):
     hist = hist.flatten()
     total = sum(hist)
-    print(total)
-
+ 
     data = [(sum(hist[i * 16: (i * 16) + 16])) for i in range(16)]
     return [(data[i] * (100 / total)) for i in range(16)]
 
@@ -87,14 +86,20 @@ mask_m = create_mask(img_m, image_fond, seuil)
 
 histr1 = cv2.calcHist([img_p], [0], mask_p, [256], [0, 256])
 data1 = getDataFromHist(histr1)
+
+"""
 print("data 1: ", data1)
 plt.plot(histr1)
 plt.show()
+"""
 
 histr2 = cv2.calcHist([img_m], [0], mask_m, [256], [0, 256])
 data2 = getDataFromHist(histr2)
+
+"""
 print("data 2: ", data2)
 plt.plot(histr2)
 plt.show()
+"""
 
 print("pourcentage : ", getPourcentageFromData(data1, data2))

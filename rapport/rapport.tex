@@ -34,16 +34,22 @@ Pour cela nous avons décidez d'opter pour la technique qui repose sur ce calcul
 $$
 pixel = p_{i} - p_{b}
 $$
-et nous mettons en blanc les pixel trouvés ayant une trop grande différence avec le fond. Cette méthode a été choisis pour ca facilité et nous nous reposons sur le fait que la camera sera toujours oriente vers un cotés de la cabane, donc le fond reste toujours le meme meme avec un oiseaux devant.  Cela nous donne un masque pour trouve l'oiseau.\\
-Afin de trouver a quelle espèce appartient l'oiseaux, nous avons choisis de faire une étude sur les couleurs de l'oiseau. Pour cela ne utilisons une fonctions d'openCV qui  nous
-fourni un histogramme (diagramme qui donne ) en fonction de  l'image et du masque pour avoir l'histogramme que sur l'oiseau et non pas l'oiseau et le fond.\\
-A partir de l'histogramme nous pouvons établir un pourcentage de ressemblance avec des oiseaux préenregistrés et determiner de quelle espèce il se rapproche le plus.\\
+et nous mettons en blanc les pixel trouvés ayant une trop grande différence avec le fond. Cette méthode a été choisis pour sa facilitée et nous nous reposons sur le fait que la camera sera toujours orientée vers un côté de la cabane. Le fond restera toujours le meme peut importe l'oiseau devant. Cela nous donne un masque représentant la forme de l'oiseaux ciblé et qui nous seras également utile pour l'analyse de couleur.\\
+Afin de trouver a quelle espèce appartient l'oiseaux, nous avons choisis de faire une étude sur les couleurs de l'oiseau. Pour cela nous utilisons une fonction d'openCV qui nous fourni un histogramme (diagramme qui donne) en fonction l'image et de son masque. Cela nous permet d'obtenir l'histogramme uniquement sur l'oiseau et non pas l'oiseau et le fond. \\
+L'histogramme représente le nombre de pixels sur l'image en fonction de leurs intensités.\\
 
-Afin de mettre tout cela en pratique, nous disposons d'une boite bois que nous améliorons afin de placer une caméra pour formée la cabane a oiseau.
+Pour chaque oiseaux que nous souhaitons détecter : des histogrammes sont créés au préalable avec des photos (5 ici) de l'oiseau référence.
+Pour déterminer le pourcentage de ressemblance de l'oiseau cible (entrant dans la cabane) et d'un oiseaux de référence, nous comparons l'histogramme de ce dernier avec les 5 histogrammes de l'oiseaux de référence. \\
+
+A partir de ces histogrammes nous construisons un tableau correspondant au pourcentages 16 tons de couleurs que nous avons choisis.
+Cette méthode à été privilégié pour tenir compte de la taille de l'individu.
+Comparer les tons en absolu aurait données des résultats très différent pour un individu adulte et enfant. \\
+
+Afin de mettre tout cela en pratique, nous disposons d'une boite en bois  (appelé fièrement cabane à oiseaux), que nous améliorerons afin d'y placer une caméra et un RapsberryPi.
 \section{difficultés rencontrés}
-Au début nous avons beaucoup hésité sur quelle technique adoptée, apprentissage profond ou apprentissage automatique. Du faite qu'il est tres compliquer voir  impossible de trouver des bases de données sur les oiseaux et leurs particularités. Nous nous somme dirigés vers le traitement d'images afin de traiter l'oiseau avec nous quelques comparaisons faite au prealable. \\
+Au début nous avons beaucoup hésité sur quelle technique adoptée, apprentissage profond ou apprentissage automatique. Du faite qu'il est tres compliquer voir  impossible de trouver des bases de données sur les oiseaux et leurs particularités. Nous nous somme dirigés vers le traitement d'images afin de traiter l'oiseau avec nous quelques comparaisons faite au préalable. \\
 Un second contre temps a été sur la cabane, ou placé la camera pour avoir le meilleur angle ? Quelle taille doit faire la cabane? 
 \section{Prochaines étapes}
 \paragraph{}
-passez des images sur fond blanc a un flux videos avec le fond de la cabane. finir la cabane 
+passez des images sur fond blanc a un flux videos avec le fond de la cabane. finir la cabane. Comparer seulement des parties de l'oiseau ? 
 \end{document}
