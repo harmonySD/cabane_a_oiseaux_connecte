@@ -4,6 +4,8 @@ from cv2 import CV_32F
 # importing library for plotting
 from matplotlib import pyplot as plt
 
+from mask import create_mask
+
 
 def process(img):
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -11,47 +13,6 @@ def process(img):
     img_dilate = cv2.dilate(img_canny, None, iterations=1)
     img_erode = cv2.erode(img_dilate, None, iterations=0)
     return img_erode
-
-
-def get_masked(img):
-    h, w, _ = img.shape
-    center = h // 2, w // 2
-    contours, _ = cv2.findContours(
-        process(img), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-    for cnt in contours:
-        if cv2.contourArea(cnt) > 100:
-            if cv2.pointPolygonTest(cnt, center, False) > 0:
-                mask = np.zeros((h, w), 'uint8')
-                cv2.drawContours(mask, [cnt], -1, 255, -1)
-                return cv2.bitwise_and(img, img, mask=mask)
-
-
-def create_mask(image, background, threshold):
-
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    background = cv2.cvtColor(background, cv2.COLOR_BGR2GRAY)
-
-    image = image.astype(np.int16)
-    background = background.astype(np.int16)
-
-    # différence entre frame et background
-    mask = np.abs(image - background)
-    mask = mask.astype(np.uint8)
-
-    is_greater_threshold = mask > threshold
-
-    # Mettre en blancs les élements qui ont une trop grande différence avec le background
-    mask[is_greater_threshold] = 255
-
-    # Sinon en noir
-    mask[np.logical_not(is_greater_threshold)] = 0
-
-    # Nettoyage du mask
-    kernel = np.ones((5, 5), np.uint8)
-    mask = cv2.erode(mask, kernel, iterations=0)
-    mask = cv2.dilate(mask, kernel, iterations=0)
-
-    return mask
 
 
 def getDataFromHist(hist):

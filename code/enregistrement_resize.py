@@ -4,9 +4,9 @@ import urllib.request
 import cv2
 
 
-def resize():
+def resize(path):
     try:
-       files = os.listdir("../info_image_oiseaux/images") 
+       files = os.listdir(path) 
        for filename in files:
             filename2="../info_image_oiseaux/images/"+filename
             #lire l'image
@@ -20,8 +20,8 @@ def resize():
         print(str(e))
 
 
-def enregistre():
-    file = open('../info_image_oiseaux/images.txt', "r")
+def enregistre(path):
+    file = open(path, "r")
     lines = file.readlines()
     file.close()
     nb=0
@@ -33,5 +33,4 @@ def enregistre():
         nb+=1
 
 
-enregistre()
-resize()
+
