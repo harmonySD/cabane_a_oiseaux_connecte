@@ -10,3 +10,15 @@
 * TODO :
   - se renseigner sur les fonctions d'openCV pour les couleurs, la taille et les formes
   - demander un Raspberry pi la prochaine fois ?
+
+<24/01/2022>
+* FAIT :
+  - contour de l'oiseau
+  - calcul du diamètre (openCV)
+* TODO :
+  - essayer une approche utilisant l'analyse chromatographique de l'image de
+  l'oiseau (détouré). Quelle distance entre deux courbes de couleur ?
+  - commencer par détecter si l'oiseau est de face ou de profil (plus grande
+    surface ?)
+
+

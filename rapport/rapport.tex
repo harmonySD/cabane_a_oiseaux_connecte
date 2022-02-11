@@ -1,0 +1,55 @@
+
+\documentclass{article}
+\usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
+\geometry{a4paper} % or letter or a5paper or ... etc
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french,english]{babel}
+
+% \geometry{landscape} % rotated page geometry
+
+% See the ``Article customise'' template for come common customisations
+
+\title{Rapport intermédaire du projet long \\ La cabane à oiseaux connectée }
+\author{Harmony Simon-Duchatel, Clément Blérald}
+
+%%% BEGIN DOCUMENT
+\begin{document}
+
+\maketitle
+
+
+\section{Présentation}
+\paragraph {}
+Une cabanes à oiseaux est un bon moins d'attirées mésanges et moineaux. Mais il est fort probable que d'autres espèces moins appréciés viennent s'y nourrir. \\
+C'est pour cela que nous proposons de créé une cabane à oiseaux connectées, capable de détecter une présence dans la cabane et de déterminer l'espace de l'oiseau s'y trouvant. 
+Nous avons choisis d'implementer notre projet en python pour sa simplicités d'utilisation, et ses différentes librairie permettant de faire du traitement d'image notamment OpenCV.
+\section{Réalisation actuel} 
+\paragraph {}
+Pour débuter, nous avons établis un fichier déterminant les principaux oiseaux que nous serrons capables d'attirée à Paris, avec leurs caractéristiques. \\
+Pour enregistrer des photos d'oiseaux nous avons écrit un petit programme qui enregistre les photos en passant un url de cette photo. Et nous redéfinissons la taille de l'image
+afin d'avoir des images de meme taille que notre image du fond.\\
+Nous avons ensuite élaborer un premier programme afin de determiner si un oiseaux était présent.
+Pour cela nous avons décidez d'opter pour la technique qui repose sur ce calcul  avec $p_{i}$ les pixels de l'image avec oiseau et $p_{b}$ les pixels de l'image du fond: 
+$$
+pixel = p_{i} - p_{b}
+$$
+et nous mettons en blanc les pixel trouvés ayant une trop grande différence avec le fond. Cette méthode a été choisis pour sa facilitée et nous nous reposons sur le fait que la camera sera toujours orientée vers un côté de la cabane. Le fond restera toujours le meme peut importe l'oiseau devant. Cela nous donne un masque représentant la forme de l'oiseaux ciblé et qui nous seras également utile pour l'analyse de couleur.\\
+Afin de trouver a quelle espèce appartient l'oiseaux, nous avons choisis de faire une étude sur les couleurs de l'oiseau. Pour cela nous utilisons une fonction d'openCV qui nous fourni un histogramme (diagramme qui donne) en fonction l'image et de son masque. Cela nous permet d'obtenir l'histogramme uniquement sur l'oiseau et non pas l'oiseau et le fond. \\
+L'histogramme représente le nombre de pixels sur l'image en fonction de leurs intensités.\\
+
+Pour chaque oiseaux que nous souhaitons détecter : des histogrammes sont créés au préalable avec des photos (5 ici) de l'oiseau référence.
+Pour déterminer le pourcentage de ressemblance de l'oiseau cible (entrant dans la cabane) et d'un oiseaux de référence, nous comparons l'histogramme de ce dernier avec les 5 histogrammes de l'oiseaux de référence. \\
+
+A partir de ces histogrammes nous construisons un tableau correspondant au pourcentages 16 tons de couleurs que nous avons choisis.
+Cette méthode à été privilégié pour tenir compte de la taille de l'individu.
+Comparer les tons en absolu aurait données des résultats très différent pour un individu adulte et enfant. \\
+
+Afin de mettre tout cela en pratique, nous disposons d'une boite en bois  (appelé fièrement cabane à oiseaux), que nous améliorerons afin d'y placer une caméra et un RapsberryPi.
+\section{difficultés rencontrés}
+Au début nous avons beaucoup hésité sur quelle technique adoptée, apprentissage profond ou apprentissage automatique. Du faite qu'il est tres compliquer voir  impossible de trouver des bases de données sur les oiseaux et leurs particularités. Nous nous somme dirigés vers le traitement d'images afin de traiter l'oiseau avec nous quelques comparaisons faite au préalable. \\
+Un second contre temps a été sur la cabane, ou placé la camera pour avoir le meilleur angle ? Quelle taille doit faire la cabane? 
+\section{Prochaines étapes}
+\paragraph{}
+passez des images sur fond blanc a un flux videos avec le fond de la cabane. finir la cabane. Comparer seulement des parties de l'oiseau ? 
+\end{document}
