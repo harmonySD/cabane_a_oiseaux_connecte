@@ -4,8 +4,8 @@ from enregistrement_resize import enregistre
 
 def main():
     # enregistrer toutes le photos et les redimensionées
-    enregistre("../info_image_oiseaux/images.txt")
-    resize("../info_image_oiseaux/images")
+    enregistre("./info_image_oiseaux/images.txt")
+    resize("./info_image_oiseaux/images")
 
 
     #pour chaque image appel histogramme ?

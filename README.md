@@ -2,5 +2,7 @@
 
 Pour lancer une demo 
 ````
-$ python3 main.py
+$ make VENV=my_venv run
 ````
+
+Possibilitée de faire `make clean`
