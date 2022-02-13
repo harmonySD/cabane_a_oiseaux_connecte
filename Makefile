@@ -18,6 +18,10 @@ clean:
 	rm -rf my_venv
 	rm -rf ./info_image_oiseaux/images/
 	rm -rf ./info_image_oiseaux/images_test/
+	rm ./rapport/rapport.aux
+	rm ./rapport/rapport.fdb_latexmk
+	rm ./rapport/rapport.fls
+	rm ./rapport/rapport.log
 
 
 
