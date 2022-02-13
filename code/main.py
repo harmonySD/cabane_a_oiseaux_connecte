@@ -7,7 +7,6 @@ def main():
     enregistre("../info_image_oiseaux/images.txt")
     resize("../info_image_oiseaux/images")
 
-
     #pour chaque image appel histogramme ?
 
     #appel comparaison
