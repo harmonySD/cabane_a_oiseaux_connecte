@@ -1,59 +1,19 @@
+import os
+
 import cv2
 import numpy as np
 from cv2 import CV_32F
 # importing library for plotting
 from matplotlib import pyplot as plt
 
+from mask import create_mask
+
 # global variables
-image_fond = cv2.imread("image_blanche.jpeg")
+image_fond = cv2.imread(
+    "../info_image_oiseaux/image_blanche.jpeg")
 seuil = 10
+birds = {"pigeon": 0, "étourneau": 1, "merles": 2, "mesanges": 3, "moineau": 4}
 
-def process(img):
-    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    img_canny = cv2.Canny(img_gray, 0, 50)
-    img_dilate = cv2.dilate(img_canny, None, iterations=1)
-    img_erode = cv2.erode(img_dilate, None, iterations=0)
-    return img_erode
-
-
-def get_masked(img):
-    h, w, _ = img.shape
-    center = h // 2, w // 2
-    contours, _ = cv2.findContours(
-        process(img), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-    for cnt in contours:
-        if cv2.contourArea(cnt) > 100:
-            if cv2.pointPolygonTest(cnt, center, False) > 0:
-                mask = np.zeros((h, w), 'uint8')
-                cv2.drawContours(mask, [cnt], -1, 255, -1)
-                return cv2.bitwise_and(img, img, mask=mask)
-
-def create_mask(image, background, threshold):
-
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    background = cv2.cvtColor(background, cv2.COLOR_BGR2GRAY)
-
-    image = image.astype(np.int16)
-    background = background.astype(np.int16)
-
-    # différence entre frame et background
-    mask = np.abs(image - background)
-    mask = mask.astype(np.uint8)
-
-    is_greater_threshold = mask > threshold
-
-    # Mettre en blancs les élements qui ont une trop grande différence avec le background
-    mask[is_greater_threshold] = 255
-
-    # Sinon en noir
-    mask[np.logical_not(is_greater_threshold)] = 0
-
-    # Nettoyage du mask
-    kernel = np.ones((5, 5), np.uint8)
-    mask = cv2.erode(mask, kernel, iterations=0)
-    mask = cv2.dilate(mask, kernel, iterations=0)
-
-    return mask
 
 def getDataFromHist(hist):
     hist = hist.flatten()
@@ -61,6 +21,7 @@ def getDataFromHist(hist):
 
     data = [(sum(hist[i * 16: (i * 16) + 16])) for i in range(16)]
     return [(data[i] * (100 / total)) for i in range(16)]
+
 
 def getPourcentageFromData(data1, data2):
     pourcentages = []
@@ -72,28 +33,41 @@ def getPourcentageFromData(data1, data2):
 
     return (sum(pourcentages) / 16) * 100
 
-# work if image ard named : bird_name + 1.format and format is either png or jpg
+
 def getAllImagesFromReferenceBird(bird_name):
-    images_list = []
-    for i in range(5):
-        try:
-            images_list.append(cv2.imread(
-                "../ressources/" + bird_name + ".jpg"))
-        except Exception:
-            images_list.append(cv2.imread(
-                "../ressources/" + bird_name + ".png"))
-    return images_list
+    index = birds[bird_name]
+    try:
+        return [cv2.imread("../info_image_oiseaux/images/resizeimage" + i + ".jpg") for i in range((index * 4),(index * 4) + 4)]
+    except Exception as e:
+        print(e)
 
 
-def getAllMaskFromReferenceBird(bird_name, images_list):
+def getAllMaskFromReferenceBird(images_list):
     return [create_mask(images_list[i], image_fond, seuil) for i in range(len(images_list))]
 
 
 def getAllHistogrammesFromReferenceBird(bird_name):
     images_list = getAllImagesFromReferenceBird(bird_name)
-    mask_list = getAllMaskFromReferenceBird(bird_name, images_list)
+    mask_list = getAllMaskFromReferenceBird(images_list)
 
     return [cv2.calcHist([images_list[i]], [0], mask_list[i], [256], [0, 256]) for i in range(len(images_list))]
+
+# * Si [0;3] = pigeon, [4;7] = étourneau, [8;11] = merles, [12;15] = mesanges, [16;19] = moineau
+
+# ! Regarde ici Harmony : la fonction "build" est celle-ci
+def LoadHistogramsAllFromReferencesBird():
+    path = "../info_image_resize/images/"
+    file_list = os.listdir(path)
+
+    # * peut être enlever si on enlève les photos qui ne servent à rien
+    file_filters = [x for x in file_list if x.found("resize") != -1]
+
+    try:
+        img_arr = [cv2.imread(path + file_filters[i]) for i in range(20)]
+    except Exception as e:
+        print("Erreur while attempting to load images")
+
+    return [getAllHistogrammesFromReferenceBird(list(birds.keys())[i]) for i in range(5)]
 
 
 def compareTargetAndOneReferenceBirds(histTarget, hist_list):
@@ -108,13 +82,13 @@ def compareTargetAndOneReferenceBirds(histTarget, hist_list):
 
 
 def compareTargetToAllReferenceBird(hist_target):
-    bird_names = ["merles", "pigeon", "mesanges", "moineau", "pie"]
+
     pourcentages = [compareTargetAndOneReferenceBirds(
-        hist_target, name) for name in bird_names]
+        hist_target, name) for name in birds.keys()]
 
     max_value = max(pourcentages)
     max_index = pourcentages.index(max_value)
-    return (bird_names[max_index], pourcentages[max_index])
+    return (birds[max_index], pourcentages[max_index])
 
 
 def tellClosestBird(img_target):
@@ -126,6 +100,11 @@ def tellClosestBird(img_target):
     print("D'après une analyse basé strictement sur la couleur, l'oiseau le plus proche de l'oiseau cible est  un : ",
           bird[0], " avec une ressemblance de ", bird[1])
 
-# ? Ou ranger l'image envoyé par le Rapsberry Pi
-# ! Tests : A enlever à la fin, il n'y a rien dans ressource pour l'instant
-# ! ------------------------------------ 
+# ? Ou ranger l'image envoyé par le Rapsberry Pi => info_image_oiseaux
+# ! ------------------------------------
+
+
+"""
+images_test : la photo de l'oiseau de la cabane
+images : images oiseaux référence
+"""
