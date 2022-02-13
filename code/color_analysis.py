@@ -6,9 +6,7 @@ from matplotlib import pyplot as plt
 
 # global variables
 image_fond = cv2.imread("image_blanche.jpeg")
-
 seuil = 10
-
 
 def process(img):
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -29,7 +27,6 @@ def get_masked(img):
                 mask = np.zeros((h, w), 'uint8')
                 cv2.drawContours(mask, [cnt], -1, 255, -1)
                 return cv2.bitwise_and(img, img, mask=mask)
-
 
 def create_mask(image, background, threshold):
 
@@ -64,7 +61,6 @@ def getDataFromHist(hist):
 
     data = [(sum(hist[i * 16: (i * 16) + 16])) for i in range(16)]
     return [(data[i] * (100 / total)) for i in range(16)]
-
 
 def getPourcentageFromData(data1, data2):
     pourcentages = []
