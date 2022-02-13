@@ -1,5 +1,4 @@
-from enregistrement_resize import resize
-from enregistrement_resize import enregistre
+from enregistrement_resize import enregistre, resize
 
 
 def main():
@@ -7,7 +6,7 @@ def main():
     enregistre("../info_image_oiseaux/images.txt")
     resize("../info_image_oiseaux/images")
 
-
+    
     #pour chaque image appel histogramme ?
 
     #appel comparaison
