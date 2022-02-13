@@ -11,7 +11,6 @@ photo 7 => répond moineau au lieu de étourneau
 photo 9 => répond moineau au lieu de merles
 """
 
-
 def main():
     # enregistrer toutes le photos et les redimensionnes
     enregistre("./info_image_oiseaux/images.txt")
