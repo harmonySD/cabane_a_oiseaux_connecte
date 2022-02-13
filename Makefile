@@ -7,6 +7,8 @@ $(VENV)/bin/activate: requirements.txt
 	$(PIP) install -r requirements.txt
 
 run: $(VENV)/bin/activate
+	mkdir ./info_image_oiseaux/images
+	mkdir ./info_image_oiseaux/images_test
 	$(PYTHON) ./code/main.py
 
 
@@ -14,8 +16,8 @@ clean:
 	rm -rf __pycache__
 	rm -rf $(VENV)
 	rm -rf my_venv
-	rm ./info_image_oiseaux/images/*
-	rm ./info_image_oiseaux/images_test/*
+	rm -rf ./info_image_oiseaux/images/
+	rm -rf ./info_image_oiseaux/images_test/
 
 
 
