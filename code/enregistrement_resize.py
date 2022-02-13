@@ -15,6 +15,7 @@ def resize(path):
             newimg = cv2.resize(oriimg,(800, 548))  
             # sauvegarder l'image
             cv2.imwrite("../info_image_oiseaux/images/resize"+filename,newimg)
+            os.remove(filename2)
             #importation de librairie nécessaires 
     except Exception as e:
         print(str(e))
