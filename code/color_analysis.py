@@ -1,3 +1,5 @@
+import os
+
 import cv2
 import numpy as np
 from cv2 import CV_32F
@@ -7,8 +9,11 @@ from matplotlib import pyplot as plt
 from mask import create_mask
 
 # global variables
-image_fond = cv2.imread("image_blanche.jpeg") # * changer le path
+image_fond = cv2.imread(
+    "../info_image_oiseaux/image_blanche.jpeg")
 seuil = 10
+birds = {"pigeon": 0, "étourneau": 1, "merles": 2, "mesanges": 3, "moineau": 4}
+
 
 def getDataFromHist(hist):
     hist = hist.flatten()
@@ -16,6 +21,7 @@ def getDataFromHist(hist):
 
     data = [(sum(hist[i * 16: (i * 16) + 16])) for i in range(16)]
     return [(data[i] * (100 / total)) for i in range(16)]
+
 
 def getPourcentageFromData(data1, data2):
     pourcentages = []
@@ -27,28 +33,41 @@ def getPourcentageFromData(data1, data2):
 
     return (sum(pourcentages) / 16) * 100
 
-# work if image ard named : bird_name + 1.format and format is either png or jpg
+
 def getAllImagesFromReferenceBird(bird_name):
-    images_list = []
-    for i in range(5):
-        try:
-            images_list.append(cv2.imread(
-                "../ressources/" + bird_name + ".jpg"))
-        except Exception:
-            print()
-            raise 
-    return images_list
+    index = birds[bird_name]
+    try:
+        return [cv2.imread("../info_image_oiseaux/images/resizeimage" + i + ".jpg") for i in range((index * 4),(index * 4) + 4)]
+    except Exception as e:
+        print(e)
 
 
-def getAllMaskFromReferenceBird(bird_name, images_list):
+def getAllMaskFromReferenceBird(images_list):
     return [create_mask(images_list[i], image_fond, seuil) for i in range(len(images_list))]
 
 
 def getAllHistogrammesFromReferenceBird(bird_name):
     images_list = getAllImagesFromReferenceBird(bird_name)
-    mask_list = getAllMaskFromReferenceBird(bird_name, images_list)
+    mask_list = getAllMaskFromReferenceBird(images_list)
 
     return [cv2.calcHist([images_list[i]], [0], mask_list[i], [256], [0, 256]) for i in range(len(images_list))]
+
+# * Si [0;3] = pigeon, [4;7] = étourneau, [8;11] = merles, [12;15] = mesanges, [16;19] = moineau
+
+# ! Regarde ici Harmony : la fonction "build" est celle-ci
+def LoadHistogramsAllFromReferencesBird():
+    path = "../info_image_resize/images/"
+    file_list = os.listdir(path)
+
+    # * peut être enlever si on enlève les photos qui ne servent à rien
+    file_filters = [x for x in file_list if x.found("resize") != -1]
+
+    try:
+        img_arr = [cv2.imread(path + file_filters[i]) for i in range(20)]
+    except Exception as e:
+        print("Erreur while attempting to load images")
+
+    return [getAllHistogrammesFromReferenceBird(list(birds.keys())[i]) for i in range(5)]
 
 
 def compareTargetAndOneReferenceBirds(histTarget, hist_list):
@@ -63,13 +82,13 @@ def compareTargetAndOneReferenceBirds(histTarget, hist_list):
 
 
 def compareTargetToAllReferenceBird(hist_target):
-    bird_names = ["merles", "pigeon", "mesanges", "moineau", "étourneau"]
+
     pourcentages = [compareTargetAndOneReferenceBirds(
-        hist_target, name) for name in bird_names]
+        hist_target, name) for name in birds.keys()]
 
     max_value = max(pourcentages)
     max_index = pourcentages.index(max_value)
-    return (bird_names[max_index], pourcentages[max_index])
+    return (birds[max_index], pourcentages[max_index])
 
 
 def tellClosestBird(img_target):
@@ -82,7 +101,8 @@ def tellClosestBird(img_target):
           bird[0], " avec une ressemblance de ", bird[1])
 
 # ? Ou ranger l'image envoyé par le Rapsberry Pi => info_image_oiseaux
-# ! ------------------------------------ 
+# ! ------------------------------------
+
 
 """
 images_test : la photo de l'oiseau de la cabane
