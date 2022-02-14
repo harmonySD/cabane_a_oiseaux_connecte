@@ -21,4 +21,10 @@
   - commencer par détecter si l'oiseau est de face ou de profil (plus grande
     surface ?)
 
-
+<14/02/2022>
+* FAIT: 
+ - début de l'algo de reconnaissance selon la couleur
+* TODO: 
+ - revoir la méthode de reconnaissance (autre que la moyenne)
+ - plus de test pour l'algo
+ - commencer à travailler sur le matériel, réfléchir sur la récupération des images sur la caméra
