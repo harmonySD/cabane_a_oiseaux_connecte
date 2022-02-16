@@ -22,15 +22,14 @@
 
 \section{Présentation}
 \paragraph {}
-Une cabane à oiseaux est un bon moyen d'attiré mésanges et moineaux. Mais il est fort probable que d'autres espèces moins appréciées viennent s'y nourrir. \\
+Une cabane à oiseaux est un bon moyen d'attirer mésanges et moineaux. Mais il est fort probable que d'autres espèces moins appréciées viennent s'y nourrir. \\
 C'est pour cela que nous proposons de créé une cabane à oiseaux connectée, capable de détecter une présence dans la cabane et de déterminer l'espèce de l'oiseau s'y trouvant. 
 Nous avons choisis d'implementer notre projet en python pour sa simplicités d'utilisation, et ses différentes librairie permettant de faire du traitement d'image, notamment OpenCV.
 \section{Réalisation actuel} 
 \paragraph {}
-Pour débuter, nous avons établis un fichier déterminant les principaux oiseaux que nous serrons capables d'attirée à Paris, avec leurs caractéristiques. \\
-Pour enregistrer des photos d'oiseaux nous avons écrit un petit programme qui enregistre les photos en passant un url de cette photo. Et nous redéfinissons la taille de l'image
-afin d'avoir des images de même taille que notre image du fond.\\
-Nous avons ensuite élaborer un premier programme afin de determiner si un oiseau était présent.
+Pour débuter, nous avons établis un fichier déterminant les principaux oiseaux que nous serrons capables d'attirer à Paris, avec leurs caractéristiques. \\
+Pour enregistrer des photos d'oiseaux nous avons écrit un petit programme qui enregistre les photos en passant un url de cette photo. Nous redéfinissons également la taille de l'image afin d'avoir des images de même taille que notre image du fond.\\
+Nous avons ensuite implémenter un premier programme afin de determiner si un oiseau était présent.
 Pour cela nous avons décidez d'opter pour la technique qui repose sur ce calcul  avec $p_{i}$ les pixels de l'image avec oiseau et $p_{b}$ les pixels de l'image du fond: 
 $$
 pixel = p_{i} - p_{b}
@@ -40,7 +39,7 @@ Afin de trouver a quelle espèce appartient l'oiseau, nous avons choisis de fair
 L'histogramme représente le nombre de pixels sur l'image en fonction de leurs intensités.\\
 
 Pour chaque oiseaux que nous souhaitons détecter : des histogrammes sont créés au préalable avec des photos (4 ici) de l'oiseau référence.
-Pour déterminer le pourcentage de ressemblance de l'oiseau cible (entrant dans la cabane) et d'un oiseaux de référence, nous comparons l'histogramme de ce dernier avec les 4 histogrammes de l'oiseaux de référence. \\
+Pour déterminer le pourcentage de ressemblance de l'oiseau cible (entrant dans la cabane) et d'un oiseaux de référence, nous comparons l'histogramme de ce dernier avec les 4 histogrammes de l'oiseaux de référence. Le résultat correspond au pourcentage le plus haut obtenu avec ces 4 comparaisons\\
 
 A partir de ces histogrammes nous construisons un tableau correspondant au pourcentages 16 tons de couleurs que nous avons choisis.
 Cette méthode à été privilégié pour tenir compte de la taille de l'individu.
@@ -86,5 +85,8 @@ Cependant la technique utilisées (difference de pixel entre le fond et l'image)
 Un second contre temps a été sur la cabane, ou placer la camera pour avoir le meilleur angle ? Quelle taille doit faire la cabane? 
 \section{Prochaines étapes}
 \paragraph{}
-Nous allons passer des images sur fond blanc a un flux videos avec le fond de la cabane. De plus nous disposons actuellement des matériaux pour construire la cabane. finir la cabane. 
+Nous allons passer des images sur fond blanc a un flux videos, nous nous servirons du fond de la cabane (fixe) comme avec le fond blanc. \\
+De plus nous disposons actuellement des matériaux pour construire la cabane. \\
+Ensuite il nous faudra rajouter des tests pour la couleur.
+
 \end{document}
