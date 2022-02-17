@@ -35,6 +35,7 @@ $$
 pixel = p_{i} - p_{b}
 $$
 et nous mettons en blanc les pixels trouvés ayant une trop grande différence avec le fond. Cette méthode a été choisis pour sa facilitée et nous nous reposons sur le fait que la camera sera toujours orientée vers un côté de la cabane. Le fond restera toujours le même peut importe l'oiseau devant. Cela nous donne un masque représentant la forme de l'oiseau ciblé et qui nous seras également utile pour l'analyse de couleur.\\
+\paragraph {}
 Afin de trouver a quelle espèce appartient l'oiseau, nous avons choisis de faire une étude sur les couleurs de l'oiseau. Pour cela nous utilisons une fonction d'openCV qui nous fourni un histogramme en fonction l'image et de son masque. Cela nous permet d'obtenir l'histogramme uniquement sur l'oiseau et non pas l'oiseau et le fond. \\
 L'histogramme représente le nombre de pixels sur l'image en fonction de leurs intensités.\\
 
@@ -47,7 +48,26 @@ Comparer les tons en absolu aurait données des résultats très différent pour
 
 Afin de mettre tout cela en pratique, nous disposons d'une boite en bois  (appelé fièrement cabane à oiseaux), que nous améliorerons afin d'y placer une caméra et un RapsberryPi.\\
 
-Coté architecture, voilà l'arborescence de notre projet:
+
+\section{difficultés rencontrés}
+
+Au début nous avons beaucoup hésité sur quelle technique adoptée, apprentissage profond via haar cascade ou apprentissage automatique via réseaux de neurone. Le fait étant qu'il est très compliqué  de trouver des bases de données sur les oiseaux et leurs particularités. Nous nous sommes donc dirigé vers le traitement d'images. Cela nous permet  de reconnaître l'oiseau grâces à d'autres critères. Les oiseaux références sont donc pré-traités et leur résultats comparé avec celui de l'oiseau entrant dans la cabane. \\ 
+\paragraph {}
+Cependant la technique utilisée (difference de pixel entre le fond et l'image) avec un fond blanc est peu pratique car certains oiseaux disposent de blanc dans leurs plumage et nous ne le prenons pas en compte dans la construction de nos histogrammes. Le problème pourrait être résolu en posant un fond de couleur d'une couleur singulière rarement présente chez les oiseaux parisiens. \\
+\paragraph {}
+\textbf{La construction de la cabane} nous à également retardé. Plusieurs méthodes pour sa conception ont été avancées. De la création d'un modèle 3D avec des logiciels comme blender, la découpe laser au fablab ou bien simplement un cabane artisanale fait main. \\
+Ensuite l'organisation même de celle-ci n'était pas évidente. Où placer la camera pour avoir le meilleur angle ? Nous permettant d'obtenir la plus grande exposition possible de l'oiseau. Quelle taille doit faire la cabane pour y permettre d'y faire entrer les oiseaux ciblés ? 
+
+\section{Prochaines étapes}
+
+\begin{itemize}
+   \item[$-$] Nous allons passer des images sur fond blanc a un \textbf{flux videos}, nous nous servirons du fond de la cabane (fixe) comme avec le fond blanc. 
+   \item[$-$] De plus nous disposons actuellement des matériaux pour construire la cabane. 
+   \item[$-$] Ensuite il nous faudra rajouter des tests pour la couleur.
+   \item[$-$] \textbf{Construire} la cabane et l'aménager
+\end{itemize}
+
+\section{Architecture}
 
 \dirtree{%
 .1 blerald-simon-duchatel-2021.
@@ -75,18 +95,10 @@ Coté architecture, voilà l'arborescence de notre projet:
    .2 Makefile.
    .2 README.md.
    .2 requirements.txt.
-}
+} 
 
+\paragraph{}
 Le Makefile permet de créé en environment virtuel avec tout les dépendances nécessaires, 2 dossiers pour l'enregistrement des photos, et de lancer le main afin d'avoir une démonstration de notre projet.\\
 
-\section{difficultés rencontrés}
-Au début nous avons beaucoup hésité sur quelle technique adoptée, apprentissage profond ou apprentissage automatique. Du faite qu'il est tres compliquer voir  impossible de trouver des bases de données sur les oiseaux et leurs particularités. Nous nous somme dirigés vers le traitement d'images afin de traiter l'oiseau avec nous quelques comparaisons faite au préalable. \\ 
-Cependant la technique utilisées (difference de pixel entre le fond et l'image) avec un fond blanc est peu pratique car certains oiseaux dispose de blanc dans leurs plumage et nous le prenons pas en compte dans les histogrammes. Le problème sera peut être résolu avec la cabane car le fond sera de couleur bois (moins présente chez les oiseaux)
-Un second contre temps a été sur la cabane, ou placer la camera pour avoir le meilleur angle ? Quelle taille doit faire la cabane? 
-\section{Prochaines étapes}
-\paragraph{}
-Nous allons passer des images sur fond blanc a un flux videos, nous nous servirons du fond de la cabane (fixe) comme avec le fond blanc. \\
-De plus nous disposons actuellement des matériaux pour construire la cabane. \\
-Ensuite il nous faudra rajouter des tests pour la couleur.
 
 \end{document}
