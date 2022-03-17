@@ -68,7 +68,7 @@ def compareTargetAndOneReferenceBirds(histTarget, hist_list):
         dataRef = getDataFromHist(histRef)
         pourcentages.append(getPourcentageFromData(dataTarget, dataRef))
 
-    return sum(pourcentages) / len(pourcentages)
+    return max(pourcentages)
 
 
 def compareTargetToAllReferenceBird(hist_target, hist_list):
