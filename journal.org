@@ -28,3 +28,14 @@
  - revoir la méthode de reconnaissance (autre que la moyenne)
  - plus de test pour l'algo
  - commencer à travailler sur le matériel, réfléchir sur la récupération des images sur la caméra
+
+<21/03/2022>
+* FAIT:
+ - algo de détection de l'oiseau
+ - algo de reconnaissance selon la couleur
+* TODO:
+ - penser à installer RaspAP
+ - connexion de la caméra (essayer la caméra usb)
+ - passage de l'algo pour des vidéos
+ - faire une normalisation de couleur par rapport à des points fixes sur le fond
+ - trouver le moyen de tester en conditions réélles (enregistrer le flux vidéo pour refaire les tests)
