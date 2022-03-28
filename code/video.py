@@ -29,7 +29,7 @@ while True:
     now= time.localtime(time.time())
    
     if(int(time.strftime("%S",begin_time))+10<int(time.strftime("%S",now))):
-        image_fond=new_fond
+        image_fond=new_fond()
         print(time.strftime("%S",begin_time))
         print(time.strftime("%S",now))
         begin_time=time.localtime(time.time())
