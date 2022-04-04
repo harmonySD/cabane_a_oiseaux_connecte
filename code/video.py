@@ -1,7 +1,5 @@
 
 import time
-import typing
-from typing import List
 
 import cv2
 import numpy as np
@@ -15,17 +13,14 @@ time.sleep(5)
 
 img_opti = []
 
-def getSurfaceOfImage(img : np.ndarray) -> int:
+def getSurfaceOfImage(img):
     flattened = [val for pix in img for val in pix]
     return flattened.count(255)
     
 # renvoie image avec le plus de pixel blanc
 def setOptimalPhoto():
     global img_opti, score
-    print('score : ',score)
-    print('max : ',max(score))
-    print('index : ',img_list.index(max(score)))
-    img_opti = img_list[img_list.index(max(score))]
+    img_opti = img_list[score.index(max(score))]
     
 def new_fond():
     ret, image_fond=cap.read()#mask erode mask dilate dans create_mask pour faire moins precie et gere la
@@ -43,18 +38,7 @@ score = []
 while True: 
     ret, frame=cap.read()
     mask=create_mask(frame,image_fond,50)
-    surface = getSurfaceOfImage(mask)
-    print(surface)
-    if surface > 80000 and compteur < 100:
-        score.append(surface)
-        compteur += 1
-    elif compteur == 100:
-        setOptimalPhoto()
-        cv2.imshow("test",img_opti)
-        img_list = []
-        score = []
-        compteur = 0
-
+    
     cv2.imshow("mask",mask)
     cv2.imshow('Camera', frame)
     if cv2.waitKey(1)&0xFF==ord('q'):
@@ -64,7 +48,21 @@ while True:
         cv2.imshow("pic",pic)
      #pour changer de fond
     now= time.localtime(time.time())
+
+    if(int(time.strftime("%S",begin_time))+2<int(time.strftime("%S",now))):     
+        surface = getSurfaceOfImage(mask)
+        # ? ici 80000 est une valeur arbitraire
+        if surface > 80000 and compteur < 5:
+            score.append(surface)
+            img_list.append(frame)
+            compteur += 1
+        elif compteur == 5:
+            setOptimalPhoto()
+            img_list = []
+            score = []
+            compteur = 0
    
+    # ! changer le 100 en 10 à la fin des tests 
     if(int(time.strftime("%S",begin_time))+100<int(time.strftime("%S",now))):
         image_fond=new_fond()
         print(time.strftime("%S",begin_time))
