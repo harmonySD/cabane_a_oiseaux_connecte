@@ -39,3 +39,13 @@
  - passage de l'algo pour des vidéos
  - faire une normalisation de couleur par rapport à des points fixes sur le fond
  - trouver le moyen de tester en conditions réélles (enregistrer le flux vidéo pour refaire les tests)
+
+ <04/04/2022>
+ * FAIT:
+ - configuration du RaspAP
+ - test des masques avec un flux vidéo (sans oiseau pour l'instant)
+
+* TODO
+- detection de forme dans le masque
+- caluler la meilleure image (la plus grande surface de points blancs)
+- trouver un moyen de faire des tests en conditions réélles (ou via un flux vidéo)
