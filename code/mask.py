@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 
+
 def create_mask(image, background, threshold):
 
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -23,8 +24,8 @@ def create_mask(image, background, threshold):
 
     # Nettoyage du mask
     kernel = np.ones((5, 5), np.uint8)
-    mask = cv2.erode(mask, kernel, iterations=0)
-    mask = cv2.dilate(mask, kernel, iterations=0)
+    mask = cv2.erode(mask, kernel, iterations=1)
+    mask = cv2.dilate(mask, kernel, iterations=5)
 
     return mask
 
