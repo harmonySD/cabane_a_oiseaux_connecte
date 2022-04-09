@@ -25,7 +25,7 @@ def create_mask(image, background, threshold):
     kernel = np.ones((5, 5), np.uint8)
     mask = cv2.erode(mask, kernel, iterations=0)
     mask = cv2.dilate(mask, kernel, iterations=0)
-
+    
     return mask
 
 

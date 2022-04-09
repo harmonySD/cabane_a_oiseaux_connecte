@@ -41,3 +41,7 @@ cv2.destroyAllWindows()
 #prendre photo a partir de ca ? 
 # tester avec mask si presence ?
 # si presence alors prendre photo et appel blabla 
+# detecter si presence sur masque et prendre photo
+# chercher fct qui enregistre el flux video 
+# et enregistrer que si presence detecter
+
