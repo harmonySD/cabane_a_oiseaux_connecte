@@ -49,29 +49,29 @@ while True:
      #pour changer de fond
     now= time.localtime(time.time())
 
-    if(int(time.strftime("%S",begin_time))+2<int(time.strftime("%S",now))):     
-        surface = getSurfaceOfImage(mask)
-        # ? ici 80000 est une valeur arbitraire
-        if surface > 80000 and compteur < 5:
-            score.append(surface)
-            img_list.append(frame)
-            compteur += 1
-            print("ici")
-            #declencer la capture ?
+    # if(int(time.strftime("%S",begin_time))+2<int(time.strftime("%S",now))):     
+    surface = getSurfaceOfImage(mask)
+    # ? ici 80000 est une valeur arbitraire
+    if surface > 80000 and compteur < 5:
+        score.append(surface)
+        img_list.append(frame)
+        compteur += 1
+        print("ici")
+         #declencer la capture ?
 
-        elif compteur == 5:
-            print("enfin ...")
-            setOptimalPhoto()
-            img_list = []
-            score = []
-            compteur = 0
+    elif compteur == 5:
+        print("enfin ...")
+        setOptimalPhoto()
+        img_list = []
+        score = []
+        compteur = 0
    
     # ! changer le 100 en 10 à la fin des tests 
-    print(time.strftime("ici %S",now))
-    if(int(time.strftime("%S",begin_time))+10<int(time.strftime("%S",now))):
+    if(int(time.strftime("%S",begin_time))+10+int(time.strftime("%M",begin_time))<int(time.strftime("%S",now)+int(time.strftime("%M",now)))):
         image_fond=new_fond()
-        print(time.strftime("%S",begin_time))
-        print(time.strftime("%S",now))
+        # print(time.strftime("%S",begin_time))
+        # print(time.strftime("%S",now))
+        print("changement fond")
         begin_time=time.localtime(time.time())
     
 cap.release()
