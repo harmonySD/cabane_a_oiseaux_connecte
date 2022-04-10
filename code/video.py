@@ -10,6 +10,15 @@ cap=cv2.VideoCapture(0)
 #image_fond = cv2.imread(
  #   "info_image_oiseaux/image_blanche.jpeg")
 time.sleep(5)
+frame_width = int(video.get(3)) 
+frame_height = int(video.get(4)) 
+   
+size = (frame_width, frame_height) 
+   
+result = cv2.VideoWriter('filename.avi',  
+                         cv2.VideoWriter_fourcc(*'MJPG'), 
+                         10, size) 
+
 
 img_opti = []
 
@@ -37,6 +46,7 @@ score = []
 
 while True: 
     ret, frame=cap.read()
+
     mask=create_mask(frame,image_fond,50)
     
     cv2.imshow("mask",mask)
@@ -57,6 +67,8 @@ while True:
             img_list.append(frame)
             compteur += 1
             print("ici")
+            if ret ==True:
+                result.write(frame) 
             #declencer la capture ?
 
         elif compteur == 5:
@@ -76,4 +88,5 @@ while True:
         begin_time=time.localtime(time.time())
     
 cap.release()
+result.release()
 cv2.destroyAllWindows()
