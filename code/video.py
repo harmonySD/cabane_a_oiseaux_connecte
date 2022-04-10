@@ -47,12 +47,12 @@ score = []
 while True: 
     ret, frame=cap.read()
 
-    mask=create_mask(frame,image_fond,17)
+    mask=create_mask(frame,image_fond,25)
     
     cv2.imshow("mask",mask)
     #cv2.imshow('Camera', frame)
-    # if cv2.waitKey(1)&0xFF==ord('q'):
-    #     break
+    if cv2.waitKey(1)&0xFF==ord('q'):
+        break
      #pour changer de fond
     now= time.localtime(time.time())
 
