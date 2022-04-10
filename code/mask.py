@@ -23,9 +23,10 @@ def create_mask(image, background, threshold):
     mask[np.logical_not(is_greater_threshold)] = 0
 
     # Nettoyage du mask
-    kernel = np.ones((5, 5), np.uint8)
+    kernel = np.ones((5, 5), np.uint8) 
+    mask = cv2.dilate(mask, kernel, iterations=5)
     mask = cv2.erode(mask, kernel, iterations=1)
-    mask = cv2.dilate(mask, kernel, iterations=1)
+
 
     return mask
 
