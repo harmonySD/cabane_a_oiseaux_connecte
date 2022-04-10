@@ -68,7 +68,7 @@ while True:
    
     # ! changer le 100 en 10 à la fin des tests 
     
-    if((int(time.strftime("%S",begin_time))+10<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
+    if((int(time.strftime("%S",begin_time))+60<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
         image_fond=new_fond()
         # print(time.strftime("%S",begin_time))
         # print(time.strftime("%S",now))
