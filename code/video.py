@@ -54,26 +54,26 @@ while True:
     if cv2.waitKey(1)&0xFF==ord('q'):
         break
      #pour changer de fond
-    now= time.localtime(time.time())
+    # now= time.localtime(time.time())
 
-    if(int(time.strftime("%S",begin_time))+2<int(time.strftime("%S",now))):     
-        surface = getSurfaceOfImage(mask)
+    # if(int(time.strftime("%S",begin_time))+2<int(time.strftime("%S",now))):     
+    #     surface = getSurfaceOfImage(mask)
         # ? ici 80000 est une valeur arbitraire
-        if surface > 80000 and compteur < 5:
-            score.append(surface)
-            img_list.append(frame)
-            compteur += 1
-            print("ici")
-            if ret ==True:
-                result.write(frame) 
-            #declencer la capture ?
+        # if surface > 80000 and compteur < 5:
+        #     score.append(surface)
+        #     img_list.append(frame)
+        #     compteur += 1
+        #     print("ici")
+        #     if ret ==True:
+        #         result.write(frame) 
+        #     #declencer la capture ?
 
-        elif compteur == 5:
-            print("enfin ...")
-            setOptimalPhoto()
-            img_list = []
-            score = []
-            compteur = 0
+        # elif compteur == 5:
+        #     print("enfin ...")
+        #     setOptimalPhoto()
+        #     img_list = []
+        #     score = []
+        #     compteur = 0
    
     # ! changer le 100 en 10 à la fin des tests 
     print("tour")
