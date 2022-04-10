@@ -67,7 +67,7 @@ while True:
             compteur = 0
    
     # ! changer le 100 en 10 à la fin des tests 
-    print(time.strftime("%S",now))
+    print(time.strftime("ici %S",now))
     if(int(time.strftime("%S",begin_time))+10<int(time.strftime("%S",now))):
         image_fond=new_fond()
         print(time.strftime("%S",begin_time))
