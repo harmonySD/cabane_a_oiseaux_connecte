@@ -58,7 +58,7 @@ while True:
             compteur += 1
             print("ici")
             #declencer la capture ?
-            
+
         elif compteur == 5:
             print("enfin ...")
             setOptimalPhoto()
@@ -67,7 +67,8 @@ while True:
             compteur = 0
    
     # ! changer le 100 en 10 à la fin des tests 
-    if(int(time.strftime("%S",begin_time))+100<int(time.strftime("%S",now))):
+    print(time.strftime("%S",now))
+    if(int(time.strftime("%S",begin_time))+10<int(time.strftime("%S",now))):
         image_fond=new_fond()
         print(time.strftime("%S",begin_time))
         print(time.strftime("%S",now))
