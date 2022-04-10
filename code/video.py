@@ -10,8 +10,8 @@ cap=cv2.VideoCapture(0)
 #image_fond = cv2.imread(
  #   "info_image_oiseaux/image_blanche.jpeg")
 time.sleep(5)
-frame_width = int(video.get(3)) 
-frame_height = int(video.get(4)) 
+frame_width = int(cap.get(3)) 
+frame_height = int(cap.get(4)) 
    
 size = (frame_width, frame_height) 
    
