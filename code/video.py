@@ -53,9 +53,6 @@ while True:
     cv2.imshow('Camera', frame)
     if cv2.waitKey(1)&0xFF==ord('q'):
         break
-    if cv2.waitKey(1)&0xFF==ord('p'):
-        ret, pic=cap.read()
-        cv2.imshow("pic",pic)
      #pour changer de fond
     now= time.localtime(time.time())
 
@@ -80,12 +77,12 @@ while True:
    
     # ! changer le 100 en 10 à la fin des tests 
     print("tour")
-    if((int(time.strftime("%S",begin_time))+60<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
-        image_fond=new_fond()
-        # print(time.strftime("%S",begin_time))
-        # print(time.strftime("%S",now))
-        print("changement fond")
-        begin_time=time.localtime(time.time())
+    # if((int(time.strftime("%S",begin_time))+60<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
+    #     image_fond=new_fond()
+    #     # print(time.strftime("%S",begin_time))
+    #     # print(time.strftime("%S",now))
+    #     print("changement fond")
+    #     begin_time=time.localtime(time.time())
     
 cap.release()
 result.release()
