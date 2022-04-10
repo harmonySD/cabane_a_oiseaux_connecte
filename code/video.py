@@ -56,7 +56,11 @@ while True:
             score.append(surface)
             img_list.append(frame)
             compteur += 1
+            print("ici")
+            #declencer la capture ?
+            
         elif compteur == 5:
+            print("enfin ...")
             setOptimalPhoto()
             img_list = []
             score = []
