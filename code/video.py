@@ -57,15 +57,15 @@ while True:
     now= time.localtime(time.time())
 
     # if(int(time.strftime("%S",begin_time))+2<int(time.strftime("%S",now))):     
-    surface = getSurfaceOfImage(mask)
+    #surface = getSurfaceOfImage(mask)
     #     # ? ici 80000 est une valeur arbitraire
-    if surface > 80000 and compteur < 5:
+    #if surface > 80000 and compteur < 5:
     #         score.append(surface)
     #         img_list.append(frame)
-        compteur += 1
-        print("ici")
-        # if ret ==True:
-        #     result.write(frame) 
+        # compteur += 1
+        # print("ici")
+    if ret ==True:
+        result.write(frame) 
     #         #declencer la capture ?
 
     #     elif compteur == 5:
