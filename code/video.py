@@ -47,18 +47,18 @@ score = []
 while True: 
     ret, frame=cap.read()
 
-    mask=create_mask(frame,image_fond,25)
+    mask=create_mask(frame,image_fond,15)
     
     cv2.imshow("mask",mask)
     #cv2.imshow('Camera', frame)
-    if cv2.waitKey(1)&0xFF==ord('q'):
-        break
+    # if cv2.waitKey(1)&0xFF==ord('q'):
+    #     break
      #pour changer de fond
     now= time.localtime(time.time())
 
     # if(int(time.strftime("%S",begin_time))+2<int(time.strftime("%S",now))):     
     #surface = getSurfaceOfImage(mask)
-    #     # ? ici 80000 est une valeur arbitraire
+    #     # ? ici 80000 est une valeur arbitrairxwe
     #if surface > 80000 and compteur < 5:
     #         score.append(surface)
     #         img_list.append(frame)
