@@ -64,8 +64,8 @@ while True:
     #         img_list.append(frame)
         compteur += 1
         print("ici")
-        if ret ==True:
-            result.write(frame) 
+        # if ret ==True:
+        #     result.write(frame) 
     #         #declencer la capture ?
 
     #     elif compteur == 5:
