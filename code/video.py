@@ -47,7 +47,7 @@ score = []
 while True: 
     ret, frame=cap.read()
 
-    mask=create_mask(frame,image_fond,25)
+    mask=create_mask(frame,image_fond,50)
     
     cv2.imshow("mask",mask)
     #cv2.imshow('Camera', frame)
