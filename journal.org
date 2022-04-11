@@ -49,3 +49,13 @@
 - detection de forme dans le masque
 - caluler la meilleure image (la plus grande surface de points blancs)
 - trouver un moyen de faire des tests en conditions réélles (ou via un flux vidéo)
+
+<11/04/2022> 
+* TODO:
+- configurer le Raspberry pour réduire/supprimer les processus inutiles
+- vérifier si le programme utilise la puce graphique
+- optimiser le programme:
+ + essayer de limiter le nombre d'images par seconde (1 puis 2 puis voir à partir de combien on a une execution fluide)
+ + mesurer le nombre d'images par seconde que vous arriver à traiter
+ + voir si c'est le rendu qui ralenti le programme (voir si on peut le faire tourner sur un serveur Web local: envoyer plutôt le flux sur le serveur au lieu de le transmettre par ssh)
+ + essayer de parallèliser l'execution du programme (pensez à utiliser tous les processeurs du Raspberry)
