@@ -6,7 +6,6 @@ import logging
 import socketserver
 from threading import Condition
 from http import server
-import BaseHTTPServer
 from SimpleHTTPServer import SimpleHTTPRequestHandler
 
 import cv2
