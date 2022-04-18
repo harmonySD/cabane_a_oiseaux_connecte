@@ -36,7 +36,7 @@ while True:
     # take picture with camera
     now= time.localtime(time.time())
     if((int(time.strftime("%S",begin_time))+20<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
-        
+        begin_time=time.localtime(time.time())
         check_kill_process('fluxonline.py')
         print("Stream ended.")
         with picamera.PiCamera() as camera:
