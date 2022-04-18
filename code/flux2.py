@@ -50,6 +50,7 @@ while True:
                 # run live stream again
             processThread = threading.Thread(target=thread_second)
             processThread.start()
+            processThread.join()
             print("Stream running. Refresh page.")
 
 # print in the command line instead of file's consx
