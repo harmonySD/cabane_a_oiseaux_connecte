@@ -98,7 +98,6 @@ with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
         camera.stop_recording()
 
 def main():
-
     global capture, average
     capture = cv2.VideoCapture(0)
 
@@ -107,7 +106,7 @@ def main():
 
 
     while(1):
-
+        print("beuuuurk")
         serveur = server.HTTPServer(('',8000),StreamingHandler)
         print ("server started on: ")
         print(socket.gethostbyname(socket.gethostname()))
