@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import io
 import threading, os, signal
+from time import time
 import picamera
 import logging
 import socketserver
@@ -11,6 +12,7 @@ import subprocess
 from subprocess import check_call, call
 import sys
 import cv2
+import time
 
 
 ipath = "/home/pi/Projet/blerald-simon-duchatel-2021/code/fluxonline.py"    #CHANGE THIS PATH TO THE LOCATION OF live.py
@@ -28,21 +30,27 @@ def check_kill_process(pstring):
 
 
 # run script continuosly
+
+begin_time= time.localtime(time.time())
 while True:
     # take picture with camera
-    print("eejfrefnrjnevk:fsc")
-    with picamera.PiCamera() as camera:
-        #change resolution to get better latency
-        camera.resolution = (640,480)
-        camera.capture("/media/pi/4GB DRIVE.jpg")     #CHANGE PATH TO YOUR USB THUMBDRIVE
+    now= time.localtime(time.time())
+    if((int(time.strftime("%S",begin_time))+60<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
+        
+        check_kill_process('live.py')
+        print("Stream ended.")
+        with picamera.PiCamera() as camera:
+            #change resolution to get better latency
+            camera.resolution = (640,480)
+            camera.capture("/media/pi/4GB DRIVE.jpg")     #CHANGE PATH TO YOUR USB THUMBDRIVE
 
-        # alert picture taken
-        print("tic")
+            # alert picture taken
+            print("tic")
 
-            # run live stream again
-        processThread = threading.Thread(target=thread_second)
-        processThread.start()
-        print("Stream running. Refresh page.")
+                # run live stream again
+            processThread = threading.Thread(target=thread_second)
+            processThread.start()
+            print("Stream running. Refresh page.")
 
 # print in the command line instead of file's consx
 if __name__ == '__main__':
