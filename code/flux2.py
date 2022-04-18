@@ -42,7 +42,7 @@ while True:
         with picamera.PiCamera() as camera:
             #change resolution to get better latency
             camera.resolution = (640,480)
-            camera.capture("/media/pi/4GB DRIVE.jpg")     #CHANGE PATH TO YOUR USB THUMBDRIVE
+            camera.capture("/home/pi/Projet/blerald-simon-duchatel-2021/code/img.jpg")     #CHANGE PATH TO YOUR USB THUMBDRIVE
 
             # alert picture taken
             print("tic")
