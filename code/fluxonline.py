@@ -90,8 +90,9 @@ with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
     #Uncomment the next line to change your Pi's Camera rotation (in degrees)
     #camera.rotation = 90
     camera.start_recording(output, format='mjpeg')
-    print("bouh")
+    
     try:
+        print("bouh")
         address = ('', 8000)
         server = StreamingServer(address, StreamingHandler)
         server.serve_forever()
