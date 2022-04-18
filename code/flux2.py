@@ -53,6 +53,4 @@ while i==0:
             processThread.start()
             print("Stream running. Refresh page.")
 
-# print in the command line instead of file's consx
-if __name__ == '__main__':
-    main()
+
