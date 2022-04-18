@@ -4,14 +4,13 @@ import threading, os, signal
 import picamera
 import logging
 import socketserver
-from evdev import InputDevice
 from select import select
 from threading import Condition
 from http import server
 import subprocess
 from subprocess import check_call, call
 import sys
-import glob
+
 
 ipath = "/home/pi/Projet/blerald-simon-duchatel-2021/code/fluxonline.py"    #CHANGE THIS PATH TO THE LOCATION OF live.py
 
