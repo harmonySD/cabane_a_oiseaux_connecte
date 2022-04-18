@@ -30,7 +30,7 @@ def check_kill_process(pstring):
 
 
 # run script continuosly
-
+daemon_threads = True
 begin_time= time.localtime(time.time())
 while True:
     # take picture with camera

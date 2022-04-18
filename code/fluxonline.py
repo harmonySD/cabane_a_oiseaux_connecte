@@ -104,7 +104,7 @@ with picamera.PiCamera(resolution='640x480', framerate=30) as camera:
         check_kill_process("flux2.py")
         processThread = threading.Thread(target=thread_second)
         processThread.start()
-        processThread.join()
+        
         print("Waiting for mouse click.")
         server.serve_forever()
 
