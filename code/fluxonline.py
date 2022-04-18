@@ -1,12 +1,19 @@
-
-from http.server import BaseHTTPRequestHandler, HTTPServer
+import io
 import socket
+import cv2
+import picamera
+import logging
+import socketserver
+from threading import Condition
+from http import server
+import BaseHTTPServer
+from SimpleHTTPServer import SimpleHTTPRequestHandler
 
 import cv2
 import numpy as np
 import time
 
-class CamHandler(BaseHTTPRequestHandler):
+class CamHandler(server.BaseHTTPRequestHandler):
     def do_GET(self):
         print (self.path)
         if self.path.endswith('.mjpg'):
@@ -68,7 +75,7 @@ def main():
 
     while(1):
 
-        server = HTTPServer(('',port),CamHandler)
+        server = server.HTTPServer(('',port),CamHandler)
         print ("server started on: ")
         print(socket.gethostbyname(socket.gethostname()))
         CamHandler.BaseHTTPServer.BaseHTTPRequestHandler("GET", (internalipaddress ,portnumber), CamHandler)
