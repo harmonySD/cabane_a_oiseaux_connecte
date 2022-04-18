@@ -34,7 +34,6 @@ def check_kill_process(pstring):
 begin_time= time.localtime(time.time())
 while True:
     # take picture with camera
-    print("beurk")
     now= time.localtime(time.time())
     if((int(time.strftime("%S",begin_time))+40<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
         begin_time=time.localtime(time.time())
