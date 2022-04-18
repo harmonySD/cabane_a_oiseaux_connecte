@@ -10,6 +10,7 @@ from http import server
 import subprocess
 from subprocess import check_call, call
 import sys
+import cv2
 
 
 ipath = "/home/pi/Projet/blerald-simon-duchatel-2021/code/fluxonline.py"    #CHANGE THIS PATH TO THE LOCATION OF live.py
