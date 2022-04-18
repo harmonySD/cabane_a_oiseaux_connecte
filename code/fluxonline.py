@@ -1,29 +1,41 @@
-# Web streaming example
-# Source code from the official PiCamera package
-# http://picamera.readthedocs.io/en/latest/recipes2.html#web-streaming
-
+#!/usr/bin/python3
 import io
-import socket
-import cv2
 import picamera
 import logging
 import socketserver
+from evdev import InputDevice
 from threading import Condition
 from http import server
-
-from mask import create_mask
+import threading, os, signal
+import subprocess
+from subprocess import check_call, call
+import sys
 
 PAGE="""\
 <html>
 <head>
-<title>Raspberry Pi - Cabane a oiseaux</title>
+    <title>Pi Camera Web Stream</title>
 </head>
 <body>
-<center><h1>Raspberry Pi - Surveillance Camera</h1></center>
-<center><img src="stream.mjpg" width="640" height="480"></center>
+    <h1>Pi Camera MPEG Stream</h1>
+    <div>
+        <img src="stream.mjpg" width="640" height="480" style="margin:0 0 20px 0"/>
+    </div>
 </body>
 </html>
 """
+
+ipath = "/home/pi/Projet/blerald-simon-duchatel-2021/code/flux2.py"    #CHANGE PATH TO LOCATION OF mouse.py
+
+def thread_second():
+    call(["python3", ipath])
+
+def check_kill_process(pstring):
+    for line in os.popen("ps ax | grep " + pstring + " | grep -v grep"):
+        fields = line.split()
+        pid = fields[0]
+        os.kill(int(pid), signal.SIGKILL)
+
 
 class StreamingOutput(object):
     def __init__(self):
@@ -33,8 +45,6 @@ class StreamingOutput(object):
 
     def write(self, buf):
         if buf.startswith(b'\xff\xd8'):
-            # New frame, copy the existing buffer's content and notify all
-            # clients it's available
             self.buffer.truncate()
             with self.condition:
                 self.frame = self.buffer.getvalue()
@@ -87,16 +97,21 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
 
 with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
     output = StreamingOutput()
-    #Uncomment the next line to change your Pi's Camera rotation (in degrees)
-    #camera.rotation = 90
     camera.start_recording(output, format='mjpeg')
-    
     try:
-        while True:
-            print("bouh")
-            address = ('', 8000)
-            server = StreamingServer(address, StreamingHandler)
-            server.serve_forever()
+        address = ('', 8000)
+        server = StreamingServer(address, StreamingHandler)
+        print("Streaming.")
+        check_kill_process("mouse.py")
+        processThread = threading.Thread(target=thread_second)
+        processThread.start()
+        print("Waiting for mouse click.")
+        server.serve_forever()
+
     finally:
+        print("ERROR: Stream not able to run. Stream ended.")
         camera.stop_recording()
 
+# print in the command line instead of file's console
+if __name__ == '__main__':
+    main()
