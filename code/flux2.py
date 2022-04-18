@@ -30,7 +30,7 @@ def check_kill_process(pstring):
 # run script continuosly
 while True:
     # take picture with camera
-    if cv2.waitKey(1)&0xFF==ord('q'):
+    if cv2.waitKey(0)&0xFF==ord('q'):
         with picamera.PiCamera() as camera:
             #change resolution to get better latency
             camera.resolution = (640,480)
