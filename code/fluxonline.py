@@ -81,52 +81,20 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
             self.send_error(404)
             self.end_headers()
 
-# class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
-#     allow_reuse_address = True
-#     daemon_threads = True
+class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
+    allow_reuse_address = True
+    daemon_threads = True
 
-# with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
-#     output = StreamingOutput()
-#     #Uncomment the next line to change your Pi's Camera rotation (in degrees)
-#     #camera.rotation = 90
-#     camera.start_recording(output, format='mjpeg')
-#     try:
-#         address = ('', 8000)
-#         server = StreamingServer(address, StreamingHandler)
-#         server.serve_forever()
-#     finally:
-#         camera.stop_recording()
-
-def main():
-    global capture, average
-    capture = cv2.VideoCapture(0)
-
-    capture.set(3,800)
-    capture.set(4,600)
-
-
-    while(1):
-        print("beuuuurk")
-        serveur = server.HTTPServer(('',8000),StreamingHandler)
-        print ("server started on: ")
-        print(socket.gethostbyname(socket.gethostname()))
-        StreamingHandler.BaseHTTPServer.BaseHTTPRequestHandler("GET", ("10.3.141.1" ,"8000"), StreamingHandler)
-        serveur.handle_request()
-        k = cv2.waitKey(20)
-
-        if k == ord('q'):
-
-            capture.release()
-            serveur.socket.close() 
-            print("server stopped")
-
-            cv2.destroyAllWindows()
-            break
-
-    return
-
-
-
-main()
-
+with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
+    output = StreamingOutput()
+    #Uncomment the next line to change your Pi's Camera rotation (in degrees)
+    #camera.rotation = 90
+    camera.start_recording(output, format='mjpeg')
+    print("bouh")
+    try:
+        address = ('', 8000)
+        server = StreamingServer(address, StreamingHandler)
+        server.serve_forever()
+    finally:
+        camera.stop_recording()
 
