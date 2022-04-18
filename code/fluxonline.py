@@ -97,7 +97,7 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
 #     finally:
 #         camera.stop_recording()
 
-# def main():
+def main():
     global capture, average
     capture = cv2.VideoCapture(0)
 
