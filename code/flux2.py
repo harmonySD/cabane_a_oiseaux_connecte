@@ -29,19 +29,20 @@ def check_kill_process(pstring):
 # run script continuosly
 while True:
     # take picture with camera
-    with picamera.PiCamera() as camera:
-        #change resolution to get better latency
-        camera.resolution = (640,480)
-        camera.capture("/media/pi/4GB DRIVE.jpg")     #CHANGE PATH TO YOUR USB THUMBDRIVE
+    if cv2.waitKey(1)&0xFF==ord('q'):
+        with picamera.PiCamera() as camera:
+            #change resolution to get better latency
+            camera.resolution = (640,480)
+            camera.capture("/media/pi/4GB DRIVE.jpg")     #CHANGE PATH TO YOUR USB THUMBDRIVE
 
-         # alert picture taken
-        print("tic")
+            # alert picture taken
+            print("tic")
 
-        # run live stream again
-        processThread = threading.Thread(target=thread_second)
-        processThread.start()
-        print("Stream running. Refresh page.")
+            # run live stream again
+            processThread = threading.Thread(target=thread_second)
+            processThread.start()
+            print("Stream running. Refresh page.")
 
-# print in the command line instead of file's cons
+# print in the command line instead of file's consx
 if __name__ == '__main__':
     main()
