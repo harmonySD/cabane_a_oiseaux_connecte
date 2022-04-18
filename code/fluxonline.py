@@ -1,3 +1,7 @@
+# Web streaming example
+# Source code from the official PiCamera package
+# http://picamera.readthedocs.io/en/latest/recipes2.html#web-streaming
+
 import io
 import socket
 import cv2
@@ -7,60 +11,91 @@ import socketserver
 from threading import Condition
 from http import server
 
-import cv2
-import numpy as np
-import time
+from mask import create_mask
 
-class CamHandler(server.BaseHTTPRequestHandler):
+PAGE="""\
+<html>
+<head>
+<title>Raspberry Pi - Cabane a oiseaux</title>
+</head>
+<body>
+<center><h1>Raspberry Pi - Surveillance Camera</h1></center>
+<center><img src="stream.mjpg" width="640" height="480"></center>
+</body>
+</html>
+"""
+
+class StreamingOutput(object):
+    def __init__(self):
+        self.frame = None
+        self.buffer = io.BytesIO()
+        self.condition = Condition()
+
+    def write(self, buf):
+        if buf.startswith(b'\xff\xd8'):
+            # New frame, copy the existing buffer's content and notify all
+            # clients it's available
+            self.buffer.truncate()
+            with self.condition:
+                self.frame = self.buffer.getvalue()
+                self.condition.notify_all()
+            self.buffer.seek(0)
+        return self.buffer.write(buf)
+
+class StreamingHandler(server.BaseHTTPRequestHandler):
     def do_GET(self):
-        print (self.path)
-        if self.path.endswith('.mjpg'):
-            self.send_response(200)
-            self.send_header('Content-type','multipart/x-mixed-replace; boundary=--jpgboundary')
+        if self.path == '/':
+            self.send_response(301)
+            self.send_header('Location', '/index.html')
             self.end_headers()
-            while(True):# infinite loop with no exit condition
-                rc,img = capture.read()
-                if not rc:
-                    continue 
-                if rc:
-                    #========send img to  the cv_frame() function for CV2 operations======
-                    imgRGB = cv_frame(img) # contains all the opencv stuff i want to perform
-                    #=============================================================
-
-                    #imgRGB = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-                    r, buf = cv2.imencode(".jpg",imgRGB) 
-
-                    self.wfile.write("--jpgboundary\r\n")
-                    self.send_header('Content-type','image/jpeg')
-                    self.send_header('Content-length',str(len(buf)))
+        elif self.path == '/index.html':
+            content = PAGE.encode('utf-8')
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/html')
+            self.send_header('Content-Length', len(content))
+            self.end_headers()
+            self.wfile.write(content)
+        elif self.path == '/stream.mjpg':
+            self.send_response(200)
+            self.send_header('Age', 0)
+            self.send_header('Cache-Control', 'no-cache, private')
+            self.send_header('Pragma', 'no-cache')
+            self.send_header('Content-Type', 'multipart/x-mixed-replace; boundary=FRAME')
+            self.end_headers()
+            try:
+                while True:
+                    with output.condition:
+                        output.condition.wait()
+                        frame = output.frame
+                    self.wfile.write(b'--FRAME\r\n')
+                    self.send_header('Content-Type', 'image/jpeg')
+                    self.send_header('Content-Length', len(frame))
                     self.end_headers()
-                    self.wfile.write(bytearray(buf))
-                    self.wfile.write('\r\n')
-                    time.sleep(0.01)
-
-                    k = cv2.waitKey(20)
-                    if k == 27: 
-                        break
-
-
-
-            cv2.destroyAllWindows()
-            capture.release()   
-
-            return
-
-        if self.path.endswith('.html') or self.path=="/":
-            self.send_response(200)
-            self.send_header('Content-type','text/html')
+                    self.wfile.write(frame)
+                    self.wfile.write(b'\r\n')
+            except Exception as e:
+                logging.warning(
+                    'Removed streaming client %s: %s',
+                    self.client_address, str(e))
+        else:
+            self.send_error(404)
             self.end_headers()
-            self.wfile.write('<html><head></head><body>')
-            self.wfile.write('<img src="http://'+socket.gethostbyname(socket.gethostname())+':'+ str(port) +'/cam.mjpg"/>')
-            self.wfile.write('</body></html>')
-            return
 
+class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
+    allow_reuse_address = True
+    daemon_threads = True
 
-
-
+with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
+    output = StreamingOutput()
+    #Uncomment the next line to change your Pi's Camera rotation (in degrees)
+    #camera.rotation = 90
+    camera.start_recording(output, format='mjpeg')
+    try:
+        address = ('', 8000)
+        server = StreamingServer(address, StreamingHandler)
+        server.serve_forever()
+    finally:
+        camera.stop_recording()
 
 def main():
 
@@ -73,10 +108,10 @@ def main():
 
     while(1):
 
-        serveur = server.HTTPServer(('',8000),CamHandler)
+        serveur = server.HTTPServer(('',8000),StreamingHandler)
         print ("server started on: ")
         print(socket.gethostbyname(socket.gethostname()))
-        CamHandler.BaseHTTPServer.BaseHTTPRequestHandler("GET", ("10.3.141.1" ,"8000"), CamHandler)
+        StreamingHandler.BaseHTTPServer.BaseHTTPRequestHandler("GET", ("10.3.141.1" ,"8000"), StreamingHandler)
         serveur.handle_request()
         k = cv2.waitKey(20)
 
@@ -94,3 +129,5 @@ def main():
 
 
 main()
+
+
