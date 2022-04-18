@@ -6,7 +6,6 @@ import logging
 import socketserver
 from threading import Condition
 from http import server
-from SimpleHTTPServer import SimpleHTTPRequestHandler
 
 import cv2
 import numpy as np
@@ -74,7 +73,7 @@ def main():
 
     while(1):
 
-        server = server.HTTPServer(('',port),CamHandler)
+        server = server.HTTPServer(('',8000),CamHandler)
         print ("server started on: ")
         print(socket.gethostbyname(socket.gethostname()))
         CamHandler.BaseHTTPServer.BaseHTTPRequestHandler("GET", (internalipaddress ,portnumber), CamHandler)
