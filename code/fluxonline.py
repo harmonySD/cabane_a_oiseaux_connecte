@@ -73,17 +73,17 @@ def main():
 
     while(1):
 
-        server = server.HTTPServer(('',8000),CamHandler)
+        serveur = server.HTTPServer(('',8000),CamHandler)
         print ("server started on: ")
         print(socket.gethostbyname(socket.gethostname()))
-        CamHandler.BaseHTTPServer.BaseHTTPRequestHandler("GET", (internalipaddress ,portnumber), CamHandler)
-        server.handle_request()
+        CamHandler.BaseHTTPServer.BaseHTTPRequestHandler("GET", ("10.3.141.1" ,"8000"), CamHandler)
+        serveur.handle_request()
         k = cv2.waitKey(20)
 
         if k == ord('q'):
 
             capture.release()
-            server.socket.close() 
+            serveur.socket.close() 
             print("server stopped")
 
             cv2.destroyAllWindows()
