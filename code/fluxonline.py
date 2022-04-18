@@ -1,4 +1,11 @@
 
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import socket
+
+import cv2
+import numpy as np
+import time
+
 class CamHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         print (self.path)
