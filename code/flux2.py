@@ -30,13 +30,14 @@ def check_kill_process(pstring):
 
 
 # run script continuosly
-
+i=0
 begin_time= time.localtime(time.time())
-while True:
+while i==0:
     # take picture with camera
     now= time.localtime(time.time())
     if((int(time.strftime("%S",begin_time))+40<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
         begin_time=time.localtime(time.time())
+        i+=1
         check_kill_process('fluxonline.py')
         print("Stream ended.")
         with picamera.PiCamera() as camera:
