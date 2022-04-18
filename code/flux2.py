@@ -35,9 +35,9 @@ begin_time= time.localtime(time.time())
 while True:
     # take picture with camera
     now= time.localtime(time.time())
-    if((int(time.strftime("%S",begin_time))+60<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
+    if((int(time.strftime("%S",begin_time))+20<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
         
-        check_kill_process('live.py')
+        check_kill_process('fluxonline.py')
         print("Stream ended.")
         with picamera.PiCamera() as camera:
             #change resolution to get better latency
