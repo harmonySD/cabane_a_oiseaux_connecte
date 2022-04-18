@@ -101,7 +101,7 @@ with picamera.PiCamera(resolution='640x480', framerate=30) as camera:
         address = ('', 8000)
         server = StreamingServer(address, StreamingHandler)
         print("Streaming.")
-        check_kill_process("mouse.py")
+        check_kill_process("flux2.py")
         processThread = threading.Thread(target=thread_second)
         processThread.start()
         print("Waiting for mouse click.")
