@@ -37,7 +37,7 @@ score = []
 
 while True: 
     ret, frame=cap.read()
-    mask=create_mask(frame,image_fond,50)
+    mask=create_mask(frame,image_fond,15)
     
     cv2.imshow("mask",mask)
     cv2.imshow('Camera', frame)
@@ -71,3 +71,8 @@ while True:
     
 cap.release()
 cv2.destroyAllWindows()
+
+# ! changer le nombre de FPS de la caméra (une ou 2 par seconde)
+# ! mettre un timer dans le while 
+# ! ne pas afficher l'image
+# ! 
