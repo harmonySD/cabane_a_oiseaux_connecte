@@ -83,6 +83,8 @@ def compareTargetToAllReferenceBird(hist_target, hist_list):
 
 
 def tellClosestBird(img_target, hist_list):
+    print("width : ", len(img_target))
+    print("height : ", len(img_target[0]))
     mask_target = create_mask(img_target, image_fond, seuil)
     hist_target = cv2.calcHist([img_target], [0], mask_target, [256], [0, 256])
 
