@@ -8,7 +8,7 @@ from color_analysis import LoadHistogramsAllFromReferencesBird, tellClosestBird
 from enregistrement_resize import enregistre, resize
 from mask import create_mask
 
-cap=cv2.VideoCapture(0)
+cap=cv2.VideoCapture('videos/kestrel_switch.mp4')
 
 #image_fond = cv2.imread(
  #   "info_image_oiseaux/image_blanche.jpeg")
@@ -82,11 +82,11 @@ while True:
             img_opti = cv2.resize(img_opti,(800, 548))
             #appel comparaison
             tellClosestBird(img_opti, histoRefs)
-            """
+            
             img_list = []
             score = []
             compteur = 0
-            """
+            
         print("surface : ",surface)
         print("tour")
         print("time_elapsed : ",time_elapsed)     
