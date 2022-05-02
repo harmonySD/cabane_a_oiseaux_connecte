@@ -1,4 +1,3 @@
-# Web streaming example
 # Source code from the official PiCamera package
 # http://picamera.readthedocs.io/en/latest/recipes2.html#web-streaming
 
@@ -19,7 +18,7 @@ PAGE="""\
 <title>Raspberry Pi - Cabane a oiseaux</title>
 </head>
 <body>
-<center><h1>Raspberry Pi - Surveillance Camera</h1></center>
+<center><h1>Raspberry Pi - Cabane a oiseaux</h1></center>
 <center><img src="stream.mjpg" width="640" height="480"></center>
 </body>
 </html>
