@@ -8,7 +8,7 @@ from color_analysis import LoadHistogramsAllFromReferencesBird, tellClosestBird
 from enregistrement_resize import enregistre, resize
 from mask import create_mask
 
-cap=cv2.VideoCapture('videos/kestrel_switch.mp4')
+cap=cv2.VideoCapture('videos/blue-tit.mp4')
 
 #image_fond = cv2.imread(
  #   "info_image_oiseaux/image_blanche.jpeg")
@@ -45,7 +45,10 @@ compteur = 0
 img_list = []
 score = []
 prev = 0
-frame_rate = 1      
+frame_rate = 1
+
+for i in range(200):
+    ret, frame=cap.read()
 
 while True: 
     ret, frame=cap.read()
@@ -92,7 +95,7 @@ while True:
         print("time_elapsed : ",time_elapsed)     
         
     # ! changer le 100 en 10 à la fin des tests 
-    if((int(time.strftime("%S",begin_time))+60<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
+    if((int(time.strftime("%S",begin_time))+10<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
         image_fond=new_fond()
         # print(time.strftime("%S",begin_time))
         # print(time.strftime("%S",now))
