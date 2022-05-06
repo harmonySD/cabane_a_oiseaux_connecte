@@ -8,7 +8,7 @@ from color_analysis import LoadHistogramsAllFromReferencesBird, tellClosestBird
 from enregistrement_resize import enregistre, resize
 from mask import create_mask
 
-cap=cv2.VideoCapture('videos/blue-tit.mp4')
+cap=cv2.VideoCapture('videos/mesange2.mp4')
 
 #image_fond = cv2.imread(
  #   "info_image_oiseaux/image_blanche.jpeg")
@@ -69,7 +69,7 @@ while True:
         surface = getSurfaceOfImage(mask)
 
         # ? ici 80000 est une valeur arbitraire
-        if surface > 30000 and compteur < 5:
+        if surface > 100 and compteur < 5:
             score.append(surface)
             img_list.append(frame)
             compteur += 1
