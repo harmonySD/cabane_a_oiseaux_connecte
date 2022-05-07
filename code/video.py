@@ -9,9 +9,8 @@ from enregistrement_resize import enregistre, resize
 from mask import create_mask
 
 cap=cv2.VideoCapture('videos/mesange2.mp4')
-
-#image_fond = cv2.imread(
- #   "info_image_oiseaux/image_blanche.jpeg")
+#si on veut le flux de la camera du raspberry (a decommenter)
+# cap=cv2.VideoCapture(0)
 time.sleep(5)
 frame_width = int(cap.get(3)) 
 frame_height = int(cap.get(4)) 
@@ -68,7 +67,7 @@ while True:
         prev = time.time()
         surface = getSurfaceOfImage(mask)
 
-        # ? ici 80000 est une valeur arbitraire
+        #ici 100 est une valeur arbitraire
         if surface > 100 and compteur < 5:
             score.append(surface)
             img_list.append(frame)
@@ -93,14 +92,11 @@ while True:
         print("surface : ",surface)
         print("tour")
         print("time_elapsed : ",time_elapsed)     
-        
-    # ! changer le 100 en 10 à la fin des tests 
-    if((int(time.strftime("%S",begin_time))+10<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
-        image_fond=new_fond()
-        # print(time.strftime("%S",begin_time))
-        # print(time.strftime("%S",now))
-        print("changement fond")
-        begin_time=time.localtime(time.time())
+    #si on veut changer le fond pour un flux video du raspberry (a decommnenter)
+    # if((int(time.strftime("%S",begin_time))+100<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
+    #     image_fond=new_fond()
+    #     print("changement fond")
+    #     begin_time=time.localtime(time.time())
     
 cap.release()
 result.release()
