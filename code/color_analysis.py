@@ -1,4 +1,5 @@
 import os
+from functools import cmp_to_key
 
 import cv2
 import numpy as np
@@ -10,7 +11,7 @@ from mask import create_mask
 
 # global variables
 image_fond = cv2.imread(
-    "../info_image_oiseaux/image_blanche.jpeg")
+    "info_image_oiseaux/image_blanche.jpeg")
 seuil = 10
 birds = {"pigeon": 0, "étourneau": 1, "merles": 2, "mesanges": 3, "moineau": 4}
 
@@ -37,7 +38,7 @@ def getPourcentageFromData(data1, data2):
 def getAllImagesFromReferenceBird(bird_name):
     index = birds[bird_name]
     try:
-        return [cv2.imread("../info_image_oiseaux/images/resizeimage" + i + ".jpg") for i in range((index * 4),(index * 4) + 4)]
+        return [cv2.imread("info_image_oiseaux/images/resizeimage" + str(i) + ".jpg") for i in range((index * 4), (index * 4) + 4)]
     except Exception as e:
         print(e)
 
@@ -48,28 +49,17 @@ def getAllMaskFromReferenceBird(images_list):
 
 def getAllHistogrammesFromReferenceBird(bird_name):
     images_list = getAllImagesFromReferenceBird(bird_name)
+    #print('image_list : ',len(images_list), "\n", images_list[0])
     mask_list = getAllMaskFromReferenceBird(images_list)
 
     return [cv2.calcHist([images_list[i]], [0], mask_list[i], [256], [0, 256]) for i in range(len(images_list))]
 
-# * Si [0;3] = pigeon, [4;7] = étourneau, [8;11] = merles, [12;15] = mesanges, [16;19] = moineau
 
-# ! Regarde ici Harmony : la fonction "build" est celle-ci
 def LoadHistogramsAllFromReferencesBird():
-    path = "../info_image_resize/images/"
-    file_list = os.listdir(path)
-
-    # * peut être enlever si on enlève les photos qui ne servent à rien
-    file_filters = [x for x in file_list if x.found("resize") != -1]
-
-    try:
-        img_arr = [cv2.imread(path + file_filters[i]) for i in range(20)]
-    except Exception as e:
-        print("Erreur while attempting to load images")
-
-    return [getAllHistogrammesFromReferenceBird(list(birds.keys())[i]) for i in range(5)]
+   return [getAllHistogrammesFromReferenceBird(list(birds.keys())[i]) for i in range(5)]
 
 
+# * compare hist_target les 4 hist de l'oiseaux de référence
 def compareTargetAndOneReferenceBirds(histTarget, hist_list):
     pourcentages = []
     dataTarget = getDataFromHist(histTarget)
@@ -78,30 +68,30 @@ def compareTargetAndOneReferenceBirds(histTarget, hist_list):
         dataRef = getDataFromHist(histRef)
         pourcentages.append(getPourcentageFromData(dataTarget, dataRef))
 
-    return sum(pourcentages) / len(pourcentages)
+    return max(pourcentages)
 
 
-def compareTargetToAllReferenceBird(hist_target):
+def compareTargetToAllReferenceBird(hist_target, hist_list):
 
     pourcentages = [compareTargetAndOneReferenceBirds(
-        hist_target, name) for name in birds.keys()]
+        hist_target, hist_list[i]) for i in range(len(birds))]
 
     max_value = max(pourcentages)
     max_index = pourcentages.index(max_value)
-    return (birds[max_index], pourcentages[max_index])
+
+    return (list(birds.keys())[max_index], pourcentages[max_index])
 
 
-def tellClosestBird(img_target):
+def tellClosestBird(img_target, hist_list):
+    print("width : ", len(img_target))
+    print("height : ", len(img_target[0]))
     mask_target = create_mask(img_target, image_fond, seuil)
     hist_target = cv2.calcHist([img_target], [0], mask_target, [256], [0, 256])
 
-    bird = compareTargetToAllReferenceBird(hist_target)
+    bird = compareTargetToAllReferenceBird(hist_target, hist_list)
 
-    print("D'après une analyse basé strictement sur la couleur, l'oiseau le plus proche de l'oiseau cible est  un : ",
-          bird[0], " avec une ressemblance de ", bird[1])
-
-# ? Ou ranger l'image envoyé par le Rapsberry Pi => info_image_oiseaux
-# ! ------------------------------------
+    print("D'après une analyse basé strictement sur la couleur, l'oiseau le plus proche de l'oiseau cible est un : ",
+          bird[0], ", avec une ressemblance de ", bird[1])
 
 
 """
