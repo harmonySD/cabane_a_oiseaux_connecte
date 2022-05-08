@@ -42,7 +42,7 @@ PAGE="""\
 </head>
 <body>
 <center><h1>Raspberry Pi - Cabane a oiseaux</h1></center>
-<center><img src="stream.mjpg" width="800" height="548"></center>
+<center><img src="stream.mjpg" width="640" height="480"></center>
 </body>
 </html>
 """
@@ -62,11 +62,12 @@ class StreamingOutput(object):
             with self.condition:
                 self.frame = self.buffer.getvalue()
                 if(c!=0):
-                    mask=create_mask(self.frame,framefond,50)
+                    frame=cv2.resize(self.frame,(800, 548))
+                    mask=create_mask(frame,framefond,50)
                     surface = getSurfaceOfImage(mask)
                     if surface > 100 and compteur < 5:
                         score.append(surface)
-                        img_list.append(self.frame)
+                        img_list.append(frame)
                         compteur += 1
                         print("ici")
                     elif compteur == 5:
@@ -129,10 +130,10 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
     allow_reuse_address = True
     daemon_threads = True
 
-with picamera.PiCamera(resolution='800x548', framerate=24) as camera:
+with picamera.PiCamera(resolution='540x480', framerate=24) as camera:
     print("he")
     output = StreamingOutput()
-    framefond=output.frame
+    framefond=cv2.resize(output.frame,(800, 548))
     c+=1
     #Uncomment the next line to change your Pi's Camera rotation (in degrees)
     #camera.rotation = 90
