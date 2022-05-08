@@ -4,18 +4,11 @@
 import io
 import socket
 import cv2
-from matplotlib import image
 import picamera
 import logging
 import socketserver
 from threading import Condition
 from http import server
-
-# import the necessary packages
-from picamera.array import PiRGBArray
-from picamera import PiCamera
-import time
-import cv2
 
 from mask import create_mask
 
@@ -26,12 +19,7 @@ PAGE="""\
 </head>
 <body>
 <center><h1>Raspberry Pi - Cabane a oiseaux</h1></center>
-<center><img src="stream.m# import the necessary packages
-from picamera.array import PiRGBArray
-from picamera import PiCamera
-import time
-import cv2
-jpg" width="640" height="480"></center>
+<center><img src="stream.mjpg" width="640" height="480"></center>
 </body>
 </html>
 """
@@ -46,6 +34,7 @@ class StreamingOutput(object):
         if buf.startswith(b'\xff\xd8'):
             # New frame, copy the existing buffer's content and notify all
             # clients it's available
+            print("newframe")
             self.buffer.truncate()
             with self.condition:
                 self.frame = self.buffer.getvalue()
@@ -97,19 +86,17 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
     daemon_threads = True
 
 with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
-    rawCapture=PiRGBArray(camera,size(640,480))
-    time.sleep(0.1)
-    #output = StreamingOutput()
+    output = StreamingOutput()
     #Uncomment the next line to change your Pi's Camera rotation (in degrees)
     #camera.rotation = 90
-   # camera.start_recording(output, format='mjpeg')
+    camera.start_recording(output, format='mjpeg')
+    
     try:
-        for frame in camera.capture_continuous(rawCapture,format="bgr",use_video_port=True):
-            image=frame.array
+        while True:
             print("bouh")
-            address =('', 8000)
+            address = ('', 8000)
             server = StreamingServer(address, StreamingHandler)
             server.serve_forever()
     finally:
         camera.stop_recording()
-    
+
