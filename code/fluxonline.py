@@ -34,7 +34,7 @@ class StreamingOutput(object):
         if buf.startswith(b'\xff\xd8'):
             # New frame, copy the existing buffer's content and notify all
             # clients it's available
-            print("newframe")
+            
             self.buffer.truncate()
             with self.condition:
                 self.frame = self.buffer.getvalue()
@@ -87,6 +87,7 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
 
 with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
     output = StreamingOutput()
+    print("newframe")
     #Uncomment the next line to change your Pi's Camera rotation (in degrees)
     #camera.rotation = 90
     camera.start_recording(output, format='mjpeg')
