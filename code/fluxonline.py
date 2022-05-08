@@ -59,6 +59,32 @@ class StreamingOutput(object):
             # New frame, copy the existing buffer's content and notify all
             # clients it's available
             print("frame")
+            if(c==0):
+                print("ici1")
+                framefond=cv2.resize(self.frame,(800, 548))
+                c+=1
+            if(c!=0):
+                print("ici2")
+                frame=cv2.resize(self.frame,(800, 548))
+                mask=create_mask(frame,framefond,50)
+                surface = getSurfaceOfImage(mask)
+                if surface > 100 and compteur < 5:
+                    score.append(surface)
+                    img_list.append(frame)
+                    compteur += 1
+                    print("ici")
+                elif compteur == 5:
+                    print("enfin ...")
+                    setOptimalPhoto()
+        
+                    histoRefs = LoadHistogramsAllFromReferencesBird()
+                    img_opti = cv2.resize(img_opti,(800, 548))
+                    #appel comparaison
+                    tellClosestBird(img_opti, histoRefs)
+        
+                    img_list = []
+                    score = []
+                    compteur = 0
             self.buffer.truncate()
             with self.condition:
                 self.frame = self.buffer.getvalue()
