@@ -34,6 +34,7 @@ class StreamingOutput(object):
         if buf.startswith(b'\xff\xd8'):
             # New frame, copy the existing buffer's content and notify all
             # clients it's available
+            print("frame")
             self.buffer.truncate()
             with self.condition:
                 self.frame = self.buffer.getvalue()
