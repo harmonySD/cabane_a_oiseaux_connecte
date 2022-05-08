@@ -13,9 +13,20 @@ from http import server
 from color_analysis import LoadHistogramsAllFromReferencesBird, tellClosestBird
 from enregistrement_resize import enregistre, resize
 from mask import create_mask
-from video import getSurfaceOfImage,setOptimalPhoto
+
 
 from mask import create_mask
+def getSurfaceOfImage(img):
+    flattened = [val for pix in img for val in pix]
+    return flattened.count(255)
+
+# renvoie image avec le plus de pixel blanc
+def setOptimalPhoto():
+    global img_opti, score
+    img_opti = img_list[score.index(max(score))]
+    
+
+
 framefond=[]
 c=0
 compteur = 0
