@@ -10,7 +10,19 @@ import socketserver
 from threading import Condition
 from http import server
 
+from color_analysis import LoadHistogramsAllFromReferencesBird, tellClosestBird
+from enregistrement_resize import enregistre, resize
 from mask import create_mask
+from video import getSurfaceOfImage,setOptimalPhoto
+
+from mask import create_mask
+framefond=[]
+c=0
+compteur = 0
+img_list = []
+score = []
+prev = 0
+
 
 PAGE="""\
 <html>
@@ -34,10 +46,31 @@ class StreamingOutput(object):
         if buf.startswith(b'\xff\xd8'):
             # New frame, copy the existing buffer's content and notify all
             # clients it's available
-            print("frame")
+            
             self.buffer.truncate()
             with self.condition:
                 self.frame = self.buffer.getvalue()
+                if(c!=0):
+                    mask=create_mask(self.frame,framefond,50)
+                    surface = getSurfaceOfImage(mask)
+                    if surface > 100 and compteur < 5:
+                        score.append(surface)
+                        img_list.append(self.frame)
+                        compteur += 1
+                        print("ici")
+                    elif compteur == 5:
+                        print("enfin ...")
+                        setOptimalPhoto()
+                        #cv2.imshow('img_opti',img_opti)
+            
+                        histoRefs = LoadHistogramsAllFromReferencesBird()
+                        img_opti = cv2.resize(img_opti,(800, 548))
+                        #appel comparaison
+                        tellClosestBird(img_opti, histoRefs)
+            
+                        img_list = []
+                        score = []
+                        compteur = 0
                 self.condition.notify_all()
             self.buffer.seek(0)
         return self.buffer.write(buf)
@@ -87,6 +120,8 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
 
 with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
     output = StreamingOutput()
+    framefond=output.frame
+    c+=1
     #Uncomment the next line to change your Pi's Camera rotation (in degrees)
     #camera.rotation = 90
     camera.start_recording(output, format='mjpeg')
