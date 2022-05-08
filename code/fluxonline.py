@@ -61,6 +61,9 @@ class StreamingOutput(object):
             self.buffer.truncate()
             with self.condition:
                 self.frame = self.buffer.getvalue()
+                if(c==0):
+                    framefond=cv2.resize(self.frame,(800, 548))
+                    c+=1
                 if(c!=0):
                     frame=cv2.resize(self.frame,(800, 548))
                     mask=create_mask(frame,framefond,50)
@@ -133,8 +136,6 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
 with picamera.PiCamera(resolution='540x480', framerate=24) as camera:
     print("he")
     output = StreamingOutput()
-    framefond=cv2.resize(output.frame,(800, 548))
-    c+=1
     #Uncomment the next line to change your Pi's Camera rotation (in degrees)
     #camera.rotation = 90
     camera.start_recording(output, format='mjpeg')
