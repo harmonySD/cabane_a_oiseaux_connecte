@@ -28,12 +28,7 @@ def setOptimalPhoto():
     
 
 
-framefond=[]
-c=0
-compteur = 0
-img_list = []
-score = []
-prev = 0
+
 
 
 PAGE="""\
@@ -49,6 +44,12 @@ PAGE="""\
 """
 
 class StreamingOutput(object):
+    c=0
+    framefond=[]
+    compteur = 0
+    img_list = []
+    score = []
+    prev = 0
     def __init__(self):
         self.frame = None
         self.buffer = io.BytesIO()
