@@ -62,9 +62,11 @@ class StreamingOutput(object):
             with self.condition:
                 self.frame = self.buffer.getvalue()
                 if(c==0):
+                    print("ici1")
                     framefond=cv2.resize(self.frame,(800, 548))
                     c+=1
                 if(c!=0):
+                    print("ici2")
                     frame=cv2.resize(self.frame,(800, 548))
                     mask=create_mask(frame,framefond,50)
                     surface = getSurfaceOfImage(mask)
@@ -76,7 +78,6 @@ class StreamingOutput(object):
                     elif compteur == 5:
                         print("enfin ...")
                         setOptimalPhoto()
-                        #cv2.imshow('img_opti',img_opti)
             
                         histoRefs = LoadHistogramsAllFromReferencesBird()
                         img_opti = cv2.resize(img_opti,(800, 548))
