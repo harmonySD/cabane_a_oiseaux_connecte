@@ -31,7 +31,7 @@ PAGE="""\
 </head>
 <body>
 <center><h1>Raspberry Pi - Cabane a oiseaux</h1></center>
-<center><img src="stream.mjpg" width="640" height="480"></center>
+<center><img src="stream.mjpg" width="800" height="548"></center>
 </body>
 </html>
 """
@@ -118,7 +118,8 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
     allow_reuse_address = True
     daemon_threads = True
 
-with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
+with picamera.PiCamera(resolution='800x548', framerate=24) as camera:
+    print("he")
     output = StreamingOutput()
     framefond=output.frame
     c+=1
