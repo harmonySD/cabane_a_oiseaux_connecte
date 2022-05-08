@@ -9,12 +9,8 @@ import logging
 import socketserver
 from threading import Condition
 from http import server
-from color_analysis import LoadHistogramsAllFromReferencesBird, tellClosestBird
-from enregistrement_resize import enregistre, resize
-from mask import create_mask
-from mask import create_mask
 
-framefond=[]
+from mask import create_mask
 
 PAGE="""\
 <html>
@@ -38,26 +34,9 @@ class StreamingOutput(object):
         if buf.startswith(b'\xff\xd8'):
             # New frame, copy the existing buffer's content and notify all
             # clients it's available
-            print("newframe")
             self.buffer.truncate()
             with self.condition:
-                self.condition.notify_all()
-            self.buffer.seek(0)
-        return self.buffer.write(buf)
-
-class StreamingOutput2(object):
-    def __init__(self):
-        self.frame = None
-        self.buffer = io.BytesIO()
-        self.condition = Condition()
-
-    def write(self, buf):
-        if buf.startswith(b'\xff\xd8'):
-            # New frame, copy the existing buffer's content and notify all
-            # clients it's available
-            # print("newframe2")
-            self.buffer.truncate()
-            with self.condition:
+                self.frame = self.buffer.getvalue()
                 self.condition.notify_all()
             self.buffer.seek(0)
         return self.buffer.write(buf)
@@ -107,8 +86,6 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
 
 with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
     output = StreamingOutput()
-    # mask= StreamingOutput2()
-    # framefond=output.frame
     #Uncomment the next line to change your Pi's Camera rotation (in degrees)
     #camera.rotation = 90
     camera.start_recording(output, format='mjpeg')
