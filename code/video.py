@@ -16,7 +16,7 @@ frame_width = int(cap.get(3))
 frame_height = int(cap.get(4)) 
    
 size = (frame_width, frame_height) 
-   
+
 result = cv2.VideoWriter('filename.avi',  
                          cv2.VideoWriter_fourcc(*'MJPG'), 
                          10, size) 
@@ -85,9 +85,7 @@ while True:
             #appel comparaison
             tellClosestBird(img_opti, histoRefs)
             
-            img_list = []
-            score = []
-            compteur = 0
+            exit(2)
             
         print("surface : ",surface)
         print("tour")
