@@ -1,14 +1,15 @@
-# Source code from the official PiCamera package
+# Source code pour le paquet picamera
 # http://picamera.readthedocs.io/en/latest/recipes2.html#web-streaming
 
 import io
+import logging
 import socket
+import socketserver
+from http import server
+from threading import Condition
+
 import cv2
 import picamera
-import logging
-import socketserver
-from threading import Condition
-from http import server
 
 from mask import create_mask
 

@@ -86,7 +86,7 @@ while True:
             score = []
             compteur = 0
             
-       #si on veut changer le fond pour un flux video du raspberry (a decommnenter)
+    # si on veut changer le fond pour un flux video du raspberry (a decommnenter)
     # if((int(time.strftime("%S",begin_time))+100<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
     #     image_fond=new_fond()
     #     print("changement fond")

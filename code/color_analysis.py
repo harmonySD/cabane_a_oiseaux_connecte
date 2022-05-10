@@ -4,12 +4,11 @@ from functools import cmp_to_key
 import cv2
 import numpy as np
 from cv2 import CV_32F
-# importing library for plotting
 from matplotlib import pyplot as plt
 
 from mask import create_mask
 
-# global variables
+# variables globales
 image_fond = cv2.imread(
     "info_image_oiseaux/image_blanche.jpeg")
 seuil = 10

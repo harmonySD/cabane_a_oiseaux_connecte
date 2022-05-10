@@ -92,7 +92,7 @@ while True:
         print("surface : ",surface)
         print("tour")
         print("time_elapsed : ",time_elapsed)     
-    #si on veut changer le fond pour un flux video du raspberry (a decommnenter)
+    #   si on veut changer le fond pour un flux video du raspberry (a decommnenter)
     # if((int(time.strftime("%S",begin_time))+100<int(time.strftime("%S",now)) )or (int(time.strftime("%M",begin_time))<int(time.strftime("%M",now)))):
     #     image_fond=new_fond()
     #     print("changement fond")
