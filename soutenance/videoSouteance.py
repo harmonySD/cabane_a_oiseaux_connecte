@@ -35,7 +35,7 @@ def new_fond():
     ret, image_fond=cap.read()
     # mask erode mask dilate dans create_mask pour faire moins précis et gère la
     # variation de lumiere 
-    cv2.imshow("fond",image_fond)
+    #cv2.imshow("fond",image_fond)
     return image_fond
 
 #pour changer de fond toute les 10 minutes
